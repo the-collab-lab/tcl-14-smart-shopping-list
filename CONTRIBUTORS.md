@@ -2,7 +2,7 @@
 
 ## Cohort Participants
 Jefferson Andrés Espejo Goez<br/>
-<hManuela Jimènez Arredondo<br/>
+Manuela Jimènez Arredondo<br/>
 Lizeth Bañol Orozco <br/>
 ## Mentors
 
