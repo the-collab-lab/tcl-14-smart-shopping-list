@@ -1,8 +1,9 @@
 # The Collab Lab
 
 ## Cohort Participants
-Jefferson Andrés Espejo Goez
-Lizeth Bañol Orozco
+Jefferson Andrés Espejo Goez <br />
+Lizeth Bañol Orozco<br />
+Manuela Jimenez Arredondo <br />
 ## Mentors
 
 ## Code of Conduct Contacts
