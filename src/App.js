@@ -1,9 +1,9 @@
 import React from 'react';
-import Boton from './componentes/Boton';
+import Button from './components/Button';
 
 const App = () => (
   <div>
-    <Boton name={'Aumentar'} />
+    <Button name={'Aumentar'} />
   </div>
 );
 
