@@ -1,24 +1,13 @@
 import React from 'react';
-import { compose } from 'recompose';
-import { consumerFirebase } from '../Server/context';
 import db from '../lib/firebase';
+import { Table } from 'reactstrap';
 
-class Boton extends React.Component {
+export default class Boton extends React.Component {
   state = {
-    firebase: null,
-    id: '1',
+    itemsD: [],
     cantidad: 0,
-    nombre: 'manuela',
+    id: 0,
   };
-  static getDerivedStateFromProps(netxProps, prevState) {
-    if (netxProps.firebase === prevState.firebase) {
-      return null;
-    }
-
-    return {
-      firebase: netxProps.firebase,
-    };
-  }
 
   agregar = () =>
     this.setState({
@@ -26,10 +15,10 @@ class Boton extends React.Component {
     });
 
   registrarCantidad = (e) => {
-    const { id, cantidad, nombre, firebase } = this.state;
-    firebase.db
-      .collection('tbl_cantidad')
-      .add({ ...id, cantidad, nombre })
+    const { id, cantidad } = this.state;
+    db.db
+      .collection('lista_compras')
+      .add({ ...id, cantidad })
       .then((cantidadAfter) => {
         console.log('Se guardo con exito la cantidad', cantidadAfter);
       })
@@ -38,16 +27,49 @@ class Boton extends React.Component {
       });
   };
 
+  async componentDidMount() {
+    db.db.collection('lista_compras').onSnapshot(
+      (snapShots) => {
+        this.setState({
+          itemsD: snapShots.docs.map((doc) => {
+            return { id: doc.id, data: doc.data() };
+          }),
+        });
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  }
+
   render() {
     return (
       <div>
-        <h3>{this.props.name}</h3>
-        <div>Cantidad: {this.state.cantidad}</div>
-        <button onClick={this.agregar}> + </button>
-        <button onClick={this.registrarCantidad}>Guardar </button>
+        <div>
+          <h3>{this.props.name}</h3>
+          <div>Cantidad: {this.state.cantidad}</div>
+          <button onClick={this.agregar}> + </button>
+          <button onClick={this.registrarCantidad}>Guardar </button>
+        </div>
+        <div>
+          <Table>
+            <thead>
+              <tr>
+                <th>cantidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.itemsD && this.state.itemsD !== undefined
+                ? this.state.itemsD.map((cantidad, key) => (
+                    <tr key={key}>
+                      <td>{cantidad.data.cantidad}</td>
+                    </tr>
+                  ))
+                : null}
+            </tbody>
+          </Table>
+        </div>
       </div>
     );
   }
 }
-
-export default compose(consumerFirebase)(Boton);
