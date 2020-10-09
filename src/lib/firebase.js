@@ -1,7 +1,7 @@
 // NOTE: import only the Firebase modules that you need in your app... except
 // for the second line, which makes both the linter and react-firebase happy
 import firebase from 'firebase/app';
-import 'firebase/firebase-firestore';
+import 'firebase/firestore';
 
 // Initalize Firebase.
 var firebaseConfig = {
@@ -15,6 +15,5 @@ var firebaseConfig = {
 };
 
 let fb = firebase.initializeApp(firebaseConfig);
-let db = firebase.firestore();
-db.settings({ merge: true });
-export default { db, fb };
+
+export { fb };
