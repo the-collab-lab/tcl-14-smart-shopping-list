@@ -1,26 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './App.css';
 
-function App() {
+export default function App() {
+  const [isActive, setIsActive] = useState('list');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="body">
+        <div className="Buttons">
+          <button
+            className={`botton ${isActive === 'list' && 'bold-button'}`}
+            onClick={() => setIsActive('list')}
+          >
+            <Link to="/list" className="no-decoration">
+              List
+            </Link>
+          </button>
+          <button
+            className={`botton ${isActive === 'add' && 'bold-button'}`}
+            onClick={() => setIsActive('add')}
+          >
+            <Link to="/add-product" className="no-decoration">
+              Add product
+            </Link>
+          </button>
+        </div>
+      </div>
+      <Switch>
+        <Route path="/list">
+          <List />
+        </Route>
+        <Route path="/add-product">
+          <AddProduct />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
-export default App;
+function List() {
+  return <h2>List</h2>;
+}
+
+function AddProduct() {
+  return <h2>Add product</h2>;
+}
