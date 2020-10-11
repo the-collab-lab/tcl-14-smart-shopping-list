@@ -1,6 +1,5 @@
 import React from 'react';
 import db from '../lib/firebase';
-import { Table } from 'reactstrap';
 
 export default class Button extends React.Component {
   state = {
@@ -17,10 +16,10 @@ export default class Button extends React.Component {
   registerquantity = (e) => {
     const { id, quantity } = this.state;
     db.db
-      .collection('lista_compras')
+      .collection('Shopping list')
       .add({ ...id, quantity })
       .then((quantityAfter) => {
-        console.log('Se guardo con exito la cantidad', quantityAfter);
+        console.log('the amount was saved successfully', quantityAfter);
       })
       .catch((error) => {
         console.log('error', error);
@@ -28,7 +27,7 @@ export default class Button extends React.Component {
   };
 
   async componentDidMount() {
-    db.db.collection('lista_compras').onSnapshot(
+    db.db.collection('Shopping list').onSnapshot(
       (snapShots) => {
         this.setState({
           itemsD: snapShots.docs.map((doc) => {
@@ -47,28 +46,27 @@ export default class Button extends React.Component {
       <div>
         <div>
           <h3>{this.props.name}</h3>
-          <div>quantity: {this.state.quantity}</div>
+          <div>Quantity: {this.state.quantity}</div>
           <button onClick={this.add}> + </button>
-          <button onClick={this.registerquantity}>Guardar </button>
+          <button onClick={this.registerquantity}>Save </button>
         </div>
-        <div>
-          <Table>
-            <thead>
-              <tr>
-                <th>quantity</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.itemsD && this.state.itemsD !== undefined
-                ? this.state.itemsD.map((quantity, key) => (
-                    <tr key={key}>
-                      <td>{quantity.data.quantity}</td>
-                    </tr>
-                  ))
-                : null}
-            </tbody>
-          </Table>
-        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.itemsD && this.state.itemsD !== undefined
+              ? this.state.itemsD.map((quantity, key) => (
+                  <tr key={key}>
+                    <td>{quantity.data.quantity}</td>
+                  </tr>
+                ))
+              : null}
+          </tbody>
+        </table>
       </div>
     );
   }
