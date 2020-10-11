@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './App.css';
+import Button from './components/Button';
 
 export default function App() {
   const [isActive, setIsActive] = useState('list');
@@ -40,9 +41,23 @@ export default function App() {
 }
 
 function List() {
-  return <h2>List</h2>;
+  return (
+    <div>
+      <h2>List</h2>
+      <div>
+        <Button name={'Increase'} />
+      </div>
+    </div>
+  );
 }
 
 function AddProduct() {
-  return <h2>Add product</h2>;
+  return (
+    <div>
+      <h2>Add product</h2>
+      <div>
+        <Button name={'Increase'} />
+      </div>
+    </div>
+  );
 }
