@@ -1,0 +1,40 @@
+.Buttons {
+  display: flex;
+  justify-content: space-around;
+  background-color: #282c34;
+}
+
+.botton {
+  text-decoration: none;
+  font-size: 20px;
+  color: #fefefe;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 40px;
+  padding-right: 40px;
+  background-color: #09d3ac;
+  border-color: #d8d8d8;
+  border-width: 3px;
+  border-style: solid;
+  border-radius: 35px;
+  margin-right: 10px;
+  text-decoration: none;
+}
+
+.no-decoration {
+  text-decoration: none;
+}
+
+.bold-button {
+  font-weight: bold;
+}
+
+.body {
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+}
+
+h2 {
+  margin-left: 30px;
+}
