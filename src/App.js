@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './App.css';
 import Button from './components/Button';
+import Product from './components/Product/Product';
 
 export default function App() {
   const [isActive, setIsActive] = useState('list');
@@ -56,7 +57,7 @@ function AddProduct() {
     <div>
       <h2>Add product</h2>
       <div>
-        <Button name={'Increase'} />
+        <Product />
       </div>
     </div>
   );
