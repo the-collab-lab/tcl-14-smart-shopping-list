@@ -1,26 +1,29 @@
-import React, { useState } from 'react';
+import React, { Component, useState } from 'react';
 
 function Product() {
-  const [name, setName] = useState('');
-  const [selectedOption, setSelectedOption] = useState();
+  const [data, setData] = useState({
+    name: '',
+  });
 
-  const submitForm = (event) => {
+  const addProduct = (event) => {
     event.preventDefault();
-    console.log(name, selectedOption);
+    console.log('send data...' + data.name);
   };
+
+  const handleInputChange = (event) => {
+    setData({
+      ...data,
+      [event.target.name]: event.target.value,
+    });
+  };
+
   return (
     <div>
-      <form onSubmit={submitForm}>
+      <form>
         <div>
           <label>
             Name:
-            <input
-              type="text"
-              name="name"
-              onChange={(event) => {
-                setName(event.target.value);
-              }}
-            />
+            <input type="text" onChange={handleInputChange} name="name" />
           </label>
         </div>
         <div>
@@ -62,12 +65,12 @@ function Product() {
         </div>
         <div>
           <label>
-            <h4>Last purchased date</h4>
-            <input type="text" name="date" />
+            Last purchased date
+            <input type="text" onChange={handleInputChange} name="date" />
           </label>
         </div>
         <div>
-          <input type="submit" value="Save" name="Save" />
+          <input type="submit" value="Save" name="Save" onClick={addProduct} />
         </div>
       </form>
     </div>
