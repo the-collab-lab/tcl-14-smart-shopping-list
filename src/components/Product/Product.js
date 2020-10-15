@@ -7,7 +7,7 @@ function Product() {
 
   const addProduct = (event) => {
     event.preventDefault();
-    console.log('send data...' + data.name);
+    console.log('send data...' + data.name, data);
   };
 
   const handleInputChange = (event) => {
@@ -34,7 +34,7 @@ function Product() {
               name="date"
               id="soon"
               value="Soon (in the next 7 days)"
-              onClick={() => setSelectedOption('Soon (in the next 7 days)')}
+              onClick={() => setData('Soon (in the next 7 days)')}
             />
             <label> Soon (in the next 7 days)</label>
           </div>
@@ -44,9 +44,7 @@ function Product() {
               name="date"
               id="kind"
               value=" Kind of soon (in the next 14 days)"
-              onClick={() =>
-                setSelectedOption('Kind of soon (in the next 14 days)')
-              }
+              onClick={() => setData('Kind of soon (in the next 14 days)')}
             />
             <label> Kind of soon (in the next 14 days) </label>
           </div>
@@ -56,9 +54,7 @@ function Product() {
               name="date"
               id="notSoon"
               value="Not soon (in the next 30 days)"
-              onClick={() =>
-                setSelectedOption('Not soon (in the next 30 days)')
-              }
+              onClick={() => setData('Not soon (in the next 30 days)')}
             />
             <label> Not soon (in the next 30 days) </label>
           </div>
