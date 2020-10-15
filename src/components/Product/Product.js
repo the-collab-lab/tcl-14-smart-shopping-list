@@ -1,13 +1,25 @@
 import React, { Component, useState } from 'react';
+import db from '../../lib/firebase';
 
 function Product() {
+  const [option, setOption] = useState('');
   const [data, setData] = useState({
     name: '',
   });
 
   const addProduct = (event) => {
     event.preventDefault();
-    console.log('send data...' + data.name, data);
+    console.log('send data...' + data.name, option);
+
+    db.db
+      .collection('products')
+      .add({ name: data.name, date: option })
+      .then((quantityAfter) => {
+        console.log('the amount was saved successfully', quantityAfter);
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
   };
 
   const handleInputChange = (event) => {
@@ -34,7 +46,7 @@ function Product() {
               name="date"
               id="soon"
               value="Soon (in the next 7 days)"
-              onClick={() => setData('Soon (in the next 7 days)')}
+              onClick={() => setOption('Soon (in the next 7 days)')}
             />
             <label> Soon (in the next 7 days)</label>
           </div>
@@ -44,7 +56,7 @@ function Product() {
               name="date"
               id="kind"
               value=" Kind of soon (in the next 14 days)"
-              onClick={() => setData('Kind of soon (in the next 14 days)')}
+              onClick={() => setOption('Kind of soon (in the next 14 days)')}
             />
             <label> Kind of soon (in the next 14 days) </label>
           </div>
@@ -54,7 +66,7 @@ function Product() {
               name="date"
               id="notSoon"
               value="Not soon (in the next 30 days)"
-              onClick={() => setData('Not soon (in the next 30 days)')}
+              onClick={() => setOption('Not soon (in the next 30 days)')}
             />
             <label> Not soon (in the next 30 days) </label>
           </div>
