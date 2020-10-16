@@ -1,19 +1,25 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import db from '../../lib/firebase';
 
 function Product() {
   const [option, setOption] = useState('');
   const [data, setData] = useState({
     name: '',
+    lastDate: '',
   });
 
   const addProduct = (event) => {
     event.preventDefault();
-    console.log('send data...' + data.name, option);
+    console.log('send data...' + data.name, data.lastDate, option);
 
     db.db
       .collection('products')
-      .add({ name: data.name, date: option })
+      .add({
+        name: data.name,
+        lastDate: data.lastDate,
+        date: option,
+        token: token(),
+      })
       .then((quantityAfter) => {
         console.log('the amount was saved successfully', quantityAfter);
       })
@@ -27,6 +33,13 @@ function Product() {
       ...data,
       [event.target.name]: event.target.value,
     });
+  };
+
+  var rand = function () {
+    return Math.random().toString(36).substr(2);
+  };
+  var token = function () {
+    return rand() + rand();
   };
 
   return (
@@ -46,7 +59,7 @@ function Product() {
               name="date"
               id="soon"
               value="Soon (in the next 7 days)"
-              onClick={() => setOption('Soon (in the next 7 days)')}
+              onClick={() => setOption('7')}
             />
             <label> Soon (in the next 7 days)</label>
           </div>
@@ -56,7 +69,7 @@ function Product() {
               name="date"
               id="kind"
               value=" Kind of soon (in the next 14 days)"
-              onClick={() => setOption('Kind of soon (in the next 14 days)')}
+              onClick={() => setOption('14')}
             />
             <label> Kind of soon (in the next 14 days) </label>
           </div>
@@ -66,7 +79,7 @@ function Product() {
               name="date"
               id="notSoon"
               value="Not soon (in the next 30 days)"
-              onClick={() => setOption('Not soon (in the next 30 days)')}
+              onClick={() => setOption('30')}
             />
             <label> Not soon (in the next 30 days) </label>
           </div>
@@ -74,7 +87,7 @@ function Product() {
         <div>
           <label>
             Last purchased date
-            <input type="text" onChange={handleInputChange} name="date" />
+            <input type="text" onChange={handleInputChange} name="lastDate" />
           </label>
         </div>
         <div>
