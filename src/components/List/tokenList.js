@@ -9,8 +9,6 @@ export const AddToken = () => {
   const handleNewToken = () => {
     const newToken = getToken();
     localStorage.setItem('token', newToken);
-    //window.localStorage.setItem('token', newToken);
-    setToken(newToken);
   };
 
   return (
@@ -20,7 +18,7 @@ export const AddToken = () => {
     </div>
   );
 };
-
+/*
 const Autenticacion = (TokenLocal) => {
   if (TokenLocal != 'token') {
     return (
@@ -33,7 +31,7 @@ const Autenticacion = (TokenLocal) => {
     return <h2>Token was not created</h2>;
   }
 };
-/*
+
 export const tokenList = () => {
 	
   return <div>Token was not create</div>;
