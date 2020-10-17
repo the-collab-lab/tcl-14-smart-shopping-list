@@ -7,8 +7,11 @@ export const AddToken = () => {
   const [token, setToken] = useState(tokenLocal);
 
   const handleNewToken = () => {
-    const newToken = getToken();
-    localStorage.setItem('token', newToken);
+    if (!tokenLocal) {
+      const newToken = getToken();
+      localStorage.setItem('token', newToken);
+    }
+    window.location.href = '/list';
   };
 
   return (
@@ -19,13 +22,11 @@ export const AddToken = () => {
   );
 };
 /*
-const Autenticacion = (TokenLocal) => {
-  if (TokenLocal != 'token') {
+const autentication = (tokenLocal) => {
+  if (tokenLocal != 'token') {
     return (
-      <div>
         <Redirect to="/List" />
         <Route exact path="/List" component="tokenList" />)
-      </div>
     );
   } else {
     return <h2>Token was not created</h2>;
