@@ -1,10 +1,8 @@
 // NOTE: import only the Firebase modules that you need in your app... except
 // for the second line, which makes both the linter and react-firebase happy
-import firebase from '@firebase/app';
 import '@firebase/firestore';
-
 // Initalize Firebase.
-var firebaseConfig = {
+export const config = {
   apiKey: 'AIzaSyCGGw8RL0XcTZo003RWBDp52yADBDlNwlc',
   authDomain: 'tcl-14-smart-shopping-list.firebaseapp.com',
   databaseURL: 'https://tcl-14-smart-shopping-list.firebaseio.com',
@@ -13,8 +11,3 @@ var firebaseConfig = {
   messagingSenderId: '939033171046',
   appId: '1:939033171046:web:53cbe6fd4e5a4f600b09a7',
 };
-
-let fb = firebase.initializeApp(firebaseConfig);
-let db = firebase.firestore();
-db.settings({ merge: true });
-export default { db, fb };

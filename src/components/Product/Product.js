@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import db from '../../lib/firebase';
-
+import firebase from '@firebase/app';
 function Product() {
   const [option, setOption] = useState('');
   const [data, setData] = useState({
     name: '',
     lastDate: '',
   });
-
   const addProduct = (event) => {
     event.preventDefault();
     console.log('send data...' + data.name, data.lastDate, option);
-
-    db.db
+    firebase
+      .firestore()
       .collection('products')
       .add({
         name: data.name,
@@ -27,21 +25,18 @@ function Product() {
         console.log('error', error);
       });
   };
-
   const handleInputChange = (event) => {
     setData({
       ...data,
       [event.target.name]: event.target.value,
     });
   };
-
   var rand = function () {
     return Math.random().toString(36).substr(2);
   };
   var token = function () {
     return rand() + rand();
   };
-
   return (
     <div>
       <form>
@@ -86,7 +81,7 @@ function Product() {
         </div>
         <div>
           <label>
-            Last purchased date
+            <h4>Last purchased date</h4>
             <input type="text" onChange={handleInputChange} name="lastDate" />
           </label>
         </div>
@@ -97,5 +92,4 @@ function Product() {
     </div>
   );
 }
-
 export default Product;
