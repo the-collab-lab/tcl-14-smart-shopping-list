@@ -12,20 +12,13 @@ export default function App() {
         <div className="Buttons">
           <button
             className={`botton ${isActive === 'list' && 'bold-button'}`}
-            onClick={() => setIsActive('list')}
-          >
-            <Link to="/list" className="no-decoration">
-              List
-            </Link>
-          </button>
-          <button
-            className={`botton ${isActive === 'add' && 'bold-button'}`}
             onClick={() => setIsActive('tokenList')}
           >
             <Link to="/token-list" className="no-decoration">
-              token List
+              List
             </Link>
           </button>
+
           <button
             className={`botton ${isActive === 'add' && 'bold-button'}`}
             onClick={() => setIsActive('add')}
@@ -37,24 +30,15 @@ export default function App() {
         </div>
       </div>
       <Switch>
-        <Route path="/list">
-          <List />
+        <Route path="/token-list">
+          <TokenList />
         </Route>
         <Route path="/add-product">
           <AddProduct />
         </Route>
-
-        <Route path="/token-list">
-                     <TokenList />
-                  
-        </Route>
       </Switch>
     </Router>
   );
-}
-
-function List() {
-  return <h2>List</h2>;
 }
 
 function AddProduct() {
