@@ -21,20 +21,5 @@ export const AddToken = () => {
     </div>
   );
 };
-/*
-const autentication = (tokenLocal) => {
-  if (tokenLocal != 'token') {
-    return (
-        <Redirect to="/List" />
-        <Route exact path="/List" component="tokenList" />)
-    );
-  } else {
-    return <h2>Token was not created</h2>;
-  }
-};
 
-export const tokenList = () => {
-	
-  return <div>Token was not create</div>;
-};*/
 export default AddToken;
