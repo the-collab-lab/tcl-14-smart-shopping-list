@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './App.css';
-import Button from './components/Button';
+import Product from './components/Product/Product';
+import ListProduct from './components/Product/ListProduct';
 
 export default function App() {
   const [isActive, setIsActive] = useState('list');
@@ -45,7 +46,7 @@ function List() {
     <div>
       <h2>List</h2>
       <div>
-        <Button name={'Increase'} />
+        <ListProduct />
       </div>
     </div>
   );
@@ -56,7 +57,7 @@ function AddProduct() {
     <div>
       <h2>Add product</h2>
       <div>
-        <Button name={'Increase'} />
+        <Product />
       </div>
     </div>
   );
