@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './App.css';
-import TokenList from './Components/List/tokenList';
+import TokenList from './components/List/tokenList';
 
 export default function App() {
   const [isActive, setIsActive] = useState('List');
@@ -12,13 +12,20 @@ export default function App() {
         <div className="Buttons">
           <button
             className={`botton ${isActive === 'list' && 'bold-button'}`}
-            onClick={() => setIsActive('tokenList')}
+            onClick={() => setIsActive('list')}
           >
-            <Link to="/token-list" className="no-decoration">
+            <Link to="/list" className="no-decoration">
               List
             </Link>
           </button>
-
+          <button
+            className={`botton ${isActive === 'tokenList' && 'bold-button'}`}
+            onClick={() => setIsActive('tokenList')}
+          >
+            <Link to="/token-list" className="no-decoration">
+              Add token
+            </Link>
+          </button>
           <button
             className={`botton ${isActive === 'add' && 'bold-button'}`}
             onClick={() => setIsActive('add')}
