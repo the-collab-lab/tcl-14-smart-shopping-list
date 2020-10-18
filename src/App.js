@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './App.css';
-import TokenList from './components/List/tokenList';
+import TokenList from './Components/List/tokenList';
 
 export default function App() {
   const [isActive, setIsActive] = useState('List');

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import getToken from '../../lib/tokens';
-import { Router, Redirect, Route } from 'react-router';
 
 export const AddToken = () => {
   const tokenLocal = localStorage.getItem('token');
