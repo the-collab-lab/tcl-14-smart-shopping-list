@@ -4,19 +4,18 @@ function Product() {
   const [option, setOption] = useState('');
   const [data, setData] = useState({
     name: '',
-    lastDate: '',
+    lastDate: null,
   });
   const addProduct = (event) => {
     event.preventDefault();
     console.log('send data...' + data.name, data.lastDate, option);
     firebase
       .firestore()
-      .collection('products')
+      .collection(token())
       .add({
         name: data.name,
         lastDate: data.lastDate,
         date: option,
-        token: token(),
       })
       .then((quantityAfter) => {
         console.log('the amount was saved successfully', quantityAfter);
@@ -82,7 +81,7 @@ function Product() {
         <div>
           <label>
             <h4>Last purchased date</h4>
-            <input type="text" onChange={handleInputChange} name="lastDate" />
+            <input type="text" />
           </label>
         </div>
         <div>

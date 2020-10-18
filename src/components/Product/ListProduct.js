@@ -6,7 +6,7 @@ const ListProduct = () => {
       path="products"
       render={({ isloading, data }) => {
         return isloading ? (
-          <h1>Cargando</h1>
+          <h1>Loading</h1>
         ) : (
           <table>
             <thead>
