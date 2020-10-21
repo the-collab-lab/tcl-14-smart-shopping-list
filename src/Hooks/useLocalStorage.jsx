@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import getToken from '../lib/tokens';
 
 export const useLocalStorage = (key, initialValue) => {
   const [storedValue, setStoredValue] = useState(() => {

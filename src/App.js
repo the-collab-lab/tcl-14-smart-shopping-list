@@ -8,6 +8,16 @@ export default function App() {
 
   return (
     <Router>
+      <div className="tokenButton">
+        <button
+          className={`botton ${isActive === 'tokenList' && 'bold-button'}`}
+          onClick={() => setIsActive('tokenList')}
+        >
+          <Link to="/token-list" className="no-decoration">
+            Add token
+          </Link>
+        </button>
+      </div>
       <div className="body">
         <div className="Buttons">
           <button
@@ -16,14 +26,6 @@ export default function App() {
           >
             <Link to="/list" className="no-decoration">
               List
-            </Link>
-          </button>
-          <button
-            className={`botton ${isActive === 'tokenList' && 'bold-button'}`}
-            onClick={() => setIsActive('tokenList')}
-          >
-            <Link to="/token-list" className="no-decoration">
-              Add token
             </Link>
           </button>
           <button
