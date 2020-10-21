@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './App.css';
 import Product from './components/Product/Product';
 import ListProduct from './components/Product/ListProduct';
+import ListShopping from './components/ListShopping';
 
 export default function App() {
   const [isActive, setIsActive] = useState('list');
@@ -27,6 +28,14 @@ export default function App() {
               Add product
             </Link>
           </button>
+          <button
+            className={`botton ${isActive === 'shopping' && 'bold-button'}`}
+            onClick={() => setIsActive('shopping')}
+          >
+            <Link to="/list-shopping" className="no-decoration">
+              List shopping
+            </Link>
+          </button>
         </div>
       </div>
       <Switch>
@@ -35,6 +44,9 @@ export default function App() {
         </Route>
         <Route path="/add-product">
           <AddProduct />
+        </Route>
+        <Route path="/list-shopping">
+          <ListShopping />
         </Route>
       </Switch>
     </Router>
