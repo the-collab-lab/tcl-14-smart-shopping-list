@@ -4,6 +4,7 @@ import './App.css';
 import Product from './components/Product/Product';
 import ListProduct from './components/Product/ListProduct';
 import ListShopping from './components/ListShopping';
+import Home from './components/Home/home';
 
 export default function App() {
   const [isActive, setIsActive] = useState('list');
@@ -36,9 +37,20 @@ export default function App() {
               List shopping
             </Link>
           </button>
+          <button
+            className={`botton ${isActive === 'home' && 'bold-button'}`}
+            onClick={() => setIsActive('home')}
+          >
+            <Link to="/home" className="no-decoration">
+              Home
+            </Link>
+          </button>
         </div>
       </div>
       <Switch>
+        <Route path="/Home">
+          <Home />
+        </Route>
         <Route path="/list">
           <List />
         </Route>
