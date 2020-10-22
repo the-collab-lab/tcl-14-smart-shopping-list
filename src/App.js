@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './App.css';
+
 import TokenList from './components/List/tokenList';
+import Product from './components/Product/Product';
+import ListProduct from './components/Product/ListProduct';
 
 export default function App() {
   const [isActive, setIsActive] = useState('List');
@@ -50,6 +53,29 @@ export default function App() {
   );
 }
 
+
 function AddProduct() {
   return <h2>Add product</h2>;
+
+function List() {
+  return (
+    <div>
+      <h2>List</h2>
+      <div>
+        <ListProduct />
+      </div>
+    </div>
+  );
+}
+
+function AddProduct() {
+  return (
+    <div>
+      <h2>Add product</h2>
+      <div>
+        <Product />
+      </div>
+    </div>
+  );
+
 }
