@@ -53,29 +53,28 @@ export default function App() {
   );
 }
 
-
 function AddProduct() {
   return <h2>Add product</h2>;
 
-function List() {
-  return (
-    <div>
-      <h2>List</h2>
+  function List() {
+    return (
       <div>
-        <ListProduct />
+        <h2>List</h2>
+        <div>
+          <ListProduct />
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
-function AddProduct() {
-  return (
-    <div>
-      <h2>Add product</h2>
+  function AddProduct() {
+    return (
       <div>
-        <Product />
+        <h2>Add product</h2>
+        <div>
+          <Product />
+        </div>
       </div>
-    </div>
-  );
-
+    );
+  }
 }
