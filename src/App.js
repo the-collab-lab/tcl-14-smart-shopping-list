@@ -14,7 +14,7 @@ export default function App() {
           onClick={() => setIsActive('tokenList')}
         >
           <Link to="/token-list" className="no-decoration">
-            Add token
+            Create List
           </Link>
         </button>
       </div>
