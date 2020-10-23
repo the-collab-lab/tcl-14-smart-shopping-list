@@ -52,7 +52,7 @@ const Home = () => {
           onClick={handleSubmit}
           className="submit-button-container btn btn-outline-primary"
         >
-          Loginin
+          Login in
         </button>
       </div>
     </Fragment>

@@ -1,20 +1,19 @@
 import React, { Fragment, useState } from 'react';
 
 const ListShopping = () => {
-  const [data, setData] = useState();
+  const [name, setName] = useState();
   const [list, setList] = useState([]);
 
   const createItems = (event) => {
     event.preventDefault();
 
-    console.log(event.target.name);
-    setList([...list, { name: data.item }]);
+    console.log(name.item);
+    setList([...list, { name: name }]);
+    setName('');
   };
 
   const onHandleInputchange = (event) => {
-    setData({
-      [event.target.name]: event.target.value,
-    });
+    setName(event.target.value);
   };
 
   return (
@@ -25,6 +24,7 @@ const ListShopping = () => {
           <br />
           add to the list
           <input
+            value={name}
             name="item"
             type="text"
             placeholder="Add"
