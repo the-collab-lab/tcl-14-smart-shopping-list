@@ -6,6 +6,22 @@ function Product() {
     name: '',
     lastDate: null,
   });
+  const [prodctsExisting, setProdctsExisting] = useState([]);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    firebase
+      .firestore()
+      .collection('products')
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, ' => ', doc.data());
+        });
+      });
+  }, []);
+
   const addProduct = (event) => {
     event.preventDefault();
     console.log('send data...' + data.name, data.lastDate, option);
@@ -24,25 +40,25 @@ function Product() {
         console.log('error', error);
       });
   };
-  const handleInputChange = (event) => {
-    setData({
-      ...data,
-      [event.target.name]: event.target.value,
-    });
-  };
+
   var rand = function () {
     return Math.random().toString(36).substr(2);
   };
   var token = function () {
     return rand() + rand();
   };
+
   return (
     <div>
       <form>
         <div>
           <label>
             Name:
-            <input type="text" onChange={handleInputChange} name="name" />
+            <input
+              type="text"
+              onChange={(e) => setData.name(e.target.value)}
+              name="name"
+            />
           </label>
         </div>
         <div>
