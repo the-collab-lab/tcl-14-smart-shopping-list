@@ -42,6 +42,9 @@ export default function App() {
         </div>
       </div>
       <Switch>
+        <Route path="/list">
+          <List />
+        </Route>
         <Route path="/token-list">
           <TokenList />
         </Route>
@@ -53,28 +56,24 @@ export default function App() {
   );
 }
 
+function List() {
+  return (
+    <div>
+      <h2>List</h2>
+      <div>
+        <ListProduct />
+      </div>
+    </div>
+  );
+}
+
 function AddProduct() {
-  return <h2>Add product</h2>;
-
-  function List() {
-    return (
+  return (
+    <div>
+      <h2>Add product</h2>
       <div>
-        <h2>List</h2>
-        <div>
-          <ListProduct />
-        </div>
+        <Product />
       </div>
-    );
-  }
-
-  function AddProduct() {
-    return (
-      <div>
-        <h2>Add product</h2>
-        <div>
-          <Product />
-        </div>
-      </div>
-    );
-  }
+    </div>
+  );
 }
