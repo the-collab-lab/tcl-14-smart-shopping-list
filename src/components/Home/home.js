@@ -1,4 +1,6 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
+import firebase from '@firebase/app';
+
 import './home.css';
 import Title from './Loginlist/title/title';
 import Input from './Loginlist/input/input';
@@ -9,16 +11,48 @@ const Home = () => {
   const [user, setUser] = useState('');
   const [password, setPassword, createToken] = useState('');
   const [passwordError, setPasswordError] = useState(false);
+  const [tokens, setToken] = useState([]);
 
   function handleChange(name, value) {
     if (name === 'User') {
       setUser(value);
     }
+    if (name === 'token') {
+      setPassword(value);
+    }
   }
 
-  function handleSubmit() {
-    let account = { user, password };
-  }
+  const consultToken = () => {
+    const isValid = tokens.some((token) => token.password === password);
+
+    if (isValid === true) {
+      setPasswordError(false);
+    }
+    if (isValid === false) {
+      setPasswordError(true);
+    }
+  };
+
+  const getTokens = () => {
+    firebase
+      .firestore()
+      .collection('tokens')
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, ' => ', doc.data());
+          setToken([...tokens, doc.data()]);
+        });
+      })
+      .catch(function (error) {
+        console.log('Error getting documents: ', error);
+      });
+  };
+
+  useEffect(() => {
+    getTokens();
+  }, []);
 
   return (
     <Fragment>
@@ -39,7 +73,7 @@ const Home = () => {
         )}
         <div className="submit-button-container"></div>
         <button
-          onClick={handleSubmit}
+          onClick={consultToken}
           className="submit-button-container btn btn-outline-primary"
         >
           Enter my list
@@ -50,10 +84,7 @@ const Home = () => {
           </createToken>
         )}
         <div className="submit-button-container"></div>
-        <button
-          onClick={() => handleSubmit('createToken')}
-          className="submit-button-container btn btn-outline-primary"
-        >
+        <button className="submit-button-container btn btn-outline-primary">
           Create new token
         </button>
       </div>
