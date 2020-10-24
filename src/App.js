@@ -60,7 +60,7 @@ export default function App() {
         </div>
       </div>
       <Switch>
-        <Route path="/Home">
+        <Route path="/" exact>
           <Home />
         </Route>
         <Route path="/token-list">

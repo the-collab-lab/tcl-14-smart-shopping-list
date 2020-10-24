@@ -9,52 +9,21 @@ import Label from './Loginlist/label/label';
 import CreateToken from './Loginlist/createToken/createToken';
 
 const Home = () => {
-  const [user, setUser] = useState('');
-  const [password, setPassword, createToken] = useState('');
+  const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState(false);
-  const [tokens, setToken] = useState([]);
 
-  function handleChange(name, value) {
-    if (name === 'User') {
-      setUser(value);
-    }
-    if (name === 'token') {
-      setPassword(value);
-    }
+  function handleChange(name) {
+    setPassword(name);
   }
 
   const consultToken = () => {
-    const isValid = tokens.some((token) => token.password === password);
-
-    if (isValid === true) {
+    if (!password.length) {
+      setPasswordError(true);
+    } else {
       localStorage.setItem('token', password);
       setPasswordError(false);
     }
-    if (isValid === false) {
-      setPasswordError(true);
-    }
   };
-
-  const getTokens = () => {
-    firebase
-      .firestore()
-      .collection('tokens')
-      .get()
-      .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, ' => ', doc.data());
-          setToken([...tokens, doc.data()]);
-        });
-      })
-      .catch(function (error) {
-        console.log('Error getting documents: ', error);
-      });
-  };
-
-  useEffect(() => {
-    getTokens();
-  }, []);
 
   return (
     <Fragment>
@@ -64,8 +33,8 @@ const Home = () => {
           attribute={{
             id: 'token',
             name: 'token',
-            type: 'password',
-            placeholder: 'Please enter your token',
+            type: 'text',
+            placeholder: 'Please enter your tokeaan',
           }}
           handleChange={handleChange}
           param={passwordError}
@@ -80,7 +49,7 @@ const Home = () => {
         >
           Enter my list
         </button>
-        {createToken && (
+        {false && (
           <createToken className="label-error">
             Invalid or incomplete token
           </createToken>
