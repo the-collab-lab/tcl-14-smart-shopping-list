@@ -3,10 +3,11 @@ import './home.css';
 import Title from './Loginlist/title/title';
 import Input from './Loginlist/input/input';
 import Label from './Loginlist/label/label';
+import CreateToken from './Loginlist/createToken/createToken';
 
 const Home = () => {
   const [user, setUser] = useState('');
-  const [password, setPassword] = useState('');
+  const [password, setPassword, createToken] = useState('');
   const [passwordError, setPasswordError] = useState(false);
 
   function handleChange(name, value) {
@@ -22,17 +23,6 @@ const Home = () => {
   return (
     <Fragment>
       <div className="login-container form-group">
-        <Title text="Log in" />
-        <Label text="User" />
-        <Input
-          attribute={{
-            id: 'User',
-            name: 'User',
-            type: 'text',
-            placeholder: 'Please enter your username',
-          }}
-          handleChange={handleChange}
-        />
         <Label text="Token" />
         <Input
           attribute={{
@@ -52,7 +42,19 @@ const Home = () => {
           onClick={handleSubmit}
           className="submit-button-container btn btn-outline-primary"
         >
-          Login in
+          Enter my list
+        </button>
+        {createToken && (
+          <createToken className="label-error">
+            Invalid or incomplete token
+          </createToken>
+        )}
+        <div className="submit-button-container"></div>
+        <button
+          onClick={() => handleSubmit('createToken')}
+          className="submit-button-container btn btn-outline-primary"
+        >
+          Create new token
         </button>
       </div>
     </Fragment>
