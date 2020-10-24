@@ -1,16 +1,28 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './App.css';
+
+import TokenList from './components/List/tokenList';
 import Product from './components/Product/Product';
 import ListProduct from './components/Product/ListProduct';
 import ListShopping from './components/ListShopping';
 import Home from './components/Home/home';
 
 export default function App() {
-  const [isActive, setIsActive] = useState('list');
+  const [isActive, setIsActive] = useState('List');
 
   return (
     <Router>
+      <div className="tokenButton">
+        <button
+          className={`botton ${isActive === 'tokenList' && 'bold-button'}`}
+          onClick={() => setIsActive('tokenList')}
+        >
+          <Link to="/token-list" className="no-decoration">
+            Create List
+          </Link>
+        </button>
+      </div>
       <div className="body">
         <div className="Buttons">
           <button
@@ -54,6 +66,9 @@ export default function App() {
         <Route path="/list">
           <List />
         </Route>
+        <Route path="/token-list">
+          <TokenList />
+        </Route>
         <Route path="/add-product">
           <AddProduct />
         </Route>
@@ -65,24 +80,28 @@ export default function App() {
   );
 }
 
-function List() {
-  return (
-    <div>
-      <h2>List</h2>
-      <div>
-        <ListProduct />
-      </div>
-    </div>
-  );
-}
-
 function AddProduct() {
-  return (
-    <div>
-      <h2>Add product</h2>
+  return <h2>Add product</h2>;
+
+  function List() {
+    return (
       <div>
-        <Product />
+        <h2>List</h2>
+        <div>
+          <ListProduct />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  function AddProduct() {
+    return (
+      <div>
+        <h2>Add product</h2>
+        <div>
+          <Product />
+        </div>
+      </div>
+    );
+  }
 }
