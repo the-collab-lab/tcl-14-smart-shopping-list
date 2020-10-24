@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import firebase from '@firebase/app';
+import { Link } from 'react-router-dom';
 
 import './home.css';
 import Title from './Loginlist/title/title';
@@ -85,6 +86,9 @@ const Home = () => {
           </createToken>
         )}
         <div className="submit-button-container"></div>
+        <Link to="/token-list" className="no-decoration">
+          Create new token.
+        </Link>
         <button className="submit-button-container btn btn-outline-primary">
           Create new token
         </button>
