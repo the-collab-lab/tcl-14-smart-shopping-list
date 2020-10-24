@@ -26,6 +26,7 @@ const Home = () => {
     const isValid = tokens.some((token) => token.password === password);
 
     if (isValid === true) {
+      localStorage.setItem('token', password);
       setPasswordError(false);
     }
     if (isValid === false) {
