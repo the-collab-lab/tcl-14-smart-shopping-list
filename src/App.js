@@ -63,9 +63,6 @@ export default function App() {
         <Route path="/Home">
           <Home />
         </Route>
-        <Route path="/list">
-          <List />
-        </Route>
         <Route path="/token-list">
           <TokenList />
         </Route>
