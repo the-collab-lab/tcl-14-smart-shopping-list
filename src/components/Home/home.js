@@ -1,12 +1,8 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import firebase from '@firebase/app';
+import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import './home.css';
-import Title from './Loginlist/title/title';
 import Input from './Loginlist/input/input';
 import Label from './Loginlist/label/label';
-import CreateToken from './Loginlist/createToken/createToken';
 
 const Home = () => {
   const [password, setPassword] = useState('');
@@ -22,9 +18,9 @@ const Home = () => {
     } else {
       localStorage.setItem('token', password);
       setPasswordError(false);
+      //  redirect to = '/list-shopping?'
     }
   };
-
   return (
     <Fragment>
       <div className="login-container form-group">
@@ -34,7 +30,7 @@ const Home = () => {
             id: 'token',
             name: 'token',
             type: 'text',
-            placeholder: 'Please enter your tokeaan',
+            placeholder: 'Please enter your token',
           }}
           handleChange={handleChange}
           param={passwordError}
@@ -58,9 +54,6 @@ const Home = () => {
         <Link to="/token-list" className="no-decoration">
           Create new token.
         </Link>
-        <button className="submit-button-container btn btn-outline-primary">
-          Create new token
-        </button>
       </div>
     </Fragment>
   );
