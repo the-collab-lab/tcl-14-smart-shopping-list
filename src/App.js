@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './App.css';
-import ListShopping from './components/ListShopping';
+import ListProduct from './components/Product/ListProduct';
 import Home from './components/Home/home';
 import TokenList from './components/List/tokenList';
 
@@ -26,8 +26,8 @@ export default function App() {
         <Route path="/home" exact>
           <Home />
         </Route>
-        <Route path="/list-shopping">
-          <ListShopping />
+        <Route path="/list-products">
+          <ListProduct />
         </Route>
         <Route path="/tokenList">
           <TokenList />
