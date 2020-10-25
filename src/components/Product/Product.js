@@ -11,7 +11,7 @@ function Product() {
     console.log('send data...' + data.name, data.lastDate, option);
     firebase
       .firestore()
-      .collection(token())
+      .collection(localStorage.getItem('token'))
       .add({
         name: data.name,
         lastDate: data.lastDate,

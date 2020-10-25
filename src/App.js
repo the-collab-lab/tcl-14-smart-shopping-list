@@ -4,6 +4,7 @@ import './App.css';
 import ListProduct from './components/Product/ListProduct';
 import Home from './components/Home/home';
 import TokenList from './components/List/tokenList';
+import Product from './components/Product/Product';
 
 export default function App() {
   const [isActive, setIsActive] = useState('List');
@@ -28,6 +29,7 @@ export default function App() {
         </Route>
         <Route path="/list-products">
           <ListProduct />
+          <Product />
         </Route>
         <Route path="/tokenList">
           <TokenList />
