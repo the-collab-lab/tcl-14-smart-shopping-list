@@ -19,7 +19,7 @@ const Home = () => {
       localStorage.setItem('token', entry);
       setPasswordError(false);
 
-      window.location.href = '/list-shopping';
+      window.location.href = '/list-products';
     }
   };
   return (
