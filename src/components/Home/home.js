@@ -5,7 +5,7 @@ import Input from './Loginlist/input/input';
 import Label from './Loginlist/label/label';
 
 const Home = () => {
-  const [password, setPassword] = useState('');
+  const [entry, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState(false);
 
   function handleChange(name) {
@@ -13,13 +13,13 @@ const Home = () => {
   }
 
   const consultToken = () => {
-    if (!password.length) {
+    if (!entry.length) {
       setPasswordError(true);
     } else {
-      localStorage.setItem('token', password);
+      localStorage.setItem('token', entry);
       setPasswordError(false);
 
-      window.location.href = 'http://localhost:3000/list-shopping';
+      window.location.href = '/list-shopping';
     }
   };
   return (
