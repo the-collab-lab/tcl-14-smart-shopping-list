@@ -11,7 +11,7 @@ export const AddToken = () => {
       setToken(newToken);
       localStorage.setItem('token', newToken);
     }
-    window.location.href = '/list-shopping';
+    window.location.href = '/list-products';
   };
 
   return (
