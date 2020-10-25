@@ -23,14 +23,13 @@ function Product() {
       .collection('products')
       .onSnapshot((snapshot) => {
         let products = [];
-        snapshot.forEach((doc) => products.push(doc.data().name));
+        snapshot.forEach((doc) => products.push(format(doc.data().name)));
         setProductData(products);
       });
   }, []);
 
   const validateDuplicate = (product) => {
-    let productDataResult = productData;
-    if (productDataResult.indexOf(product) > -1) {
+    if (productData.indexOf(product) > -1) {
       return true;
     }
     return false;
@@ -54,13 +53,13 @@ function Product() {
   const validate = async (event) => {
     event.preventDefault();
     const colecction = firebase.firestore().collection('products');
-    const nameProduct = formate(data.name);
+    const nameProduct = format(data.name);
     try {
       const isDuplicate = validateDuplicate(nameProduct);
       if (isDuplicate) {
         viewMessage(`The product: ${data.name} already exists!!`, 'error');
       } else {
-        addProduct(colecction, nameProduct);
+        addProduct(colecction, data.name);
       }
     } catch (e) {
       viewMessage('Error', error);
@@ -74,7 +73,7 @@ function Product() {
     });
   };
 
-  const formate = (name) => {
+  const format = (name) => {
     return name.toLowerCase().replace(/[\W]+/g, '');
   };
   return (
