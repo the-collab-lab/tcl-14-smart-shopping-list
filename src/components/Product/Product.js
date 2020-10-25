@@ -1,43 +1,88 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import firebase from '@firebase/app';
+
 function Product() {
   const [option, setOption] = useState('');
   const [data, setData] = useState({
     name: '',
     lastDate: null,
   });
-  const addProduct = (event) => {
-    event.preventDefault();
-    console.log('send data...' + data.name, data.lastDate, option);
+
+  const [error, setError] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [productData, setProductData] = useState([]);
+
+  const viewMessage = (message, error) => {
+    setErrorMessage(message);
+    setError(error);
+  };
+
+  useEffect(() => {
     firebase
       .firestore()
       .collection(localStorage.getItem('token'))
+      .onSnapshot((snapshot) => {
+        let products = [];
+        snapshot.forEach((doc) => products.push(format(doc.data().name)));
+        setProductData(products);
+      });
+  }, []);
+
+  const validateDuplicate = (product) => {
+    if (productData.indexOf(product) > -1) {
+      return true;
+    }
+    return false;
+  };
+
+  const addProduct = (colecction, nameProduct) => {
+    colecction
       .add({
-        name: data.name,
+        name: nameProduct,
         lastDate: data.lastDate,
         date: option,
       })
-      .then((quantityAfter) => {
-        console.log('the amount was saved successfully', quantityAfter);
+      .then(() => {
+        viewMessage('Successfully Added', 'success');
       })
       .catch((error) => {
-        console.log('error', error);
+        viewMessage('Error', error);
       });
   };
+
+  const validate = async (event) => {
+    event.preventDefault();
+    const colecction = firebase
+      .firestore()
+      .collection(localStorage.getItem('token'));
+    const nameProduct = format(data.name);
+    try {
+      const isDuplicate = validateDuplicate(nameProduct);
+      if (isDuplicate) {
+        viewMessage(`The product: ${data.name} already exists!!`, 'error');
+      } else {
+        addProduct(colecction, data.name);
+      }
+    } catch (e) {
+      viewMessage('Error', error);
+    }
+  };
+
   const handleInputChange = (event) => {
     setData({
       ...data,
       [event.target.name]: event.target.value,
     });
   };
-  var rand = function () {
-    return Math.random().toString(36).substr(2);
-  };
-  var token = function () {
-    return rand() + rand();
+
+  const format = (name) => {
+    return name.toLowerCase().replace(/[\W]+/g, '');
   };
   return (
     <div>
+      <p role="alert" className={error}>
+        {errorMessage}
+      </p>
       <form>
         <div>
           <label>
@@ -85,7 +130,7 @@ function Product() {
           </label>
         </div>
         <div>
-          <input type="submit" value="Save" name="Save" onClick={addProduct} />
+          <input type="submit" value="Save" name="Save" onClick={validate} />
         </div>
       </form>
     </div>
