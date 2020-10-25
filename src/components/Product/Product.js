@@ -1,64 +1,92 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import firebase from '@firebase/app';
+
 function Product() {
   const [option, setOption] = useState('');
   const [data, setData] = useState({
     name: '',
     lastDate: null,
   });
-  const [prodctsExisting, setProdctsExisting] = useState([]);
+
   const [error, setError] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [productData, setProductData] = useState([]);
+
+  const viewMessage = (message, error) => {
+    setErrorMessage(message);
+    setError(error);
+  };
 
   useEffect(() => {
     firebase
       .firestore()
       .collection('products')
-      .get()
-      .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, ' => ', doc.data());
-        });
+      .onSnapshot((snapshot) => {
+        let products = [];
+        snapshot.forEach((doc) => products.push(doc.data().name));
+        setProductData(products);
       });
   }, []);
 
-  const addProduct = (event) => {
-    event.preventDefault();
-    console.log('send data...' + data.name, data.lastDate, option);
-    firebase
-      .firestore()
-      .collection(token())
+  const validateDuplicate = (product) => {
+    let productDataResult = productData;
+    if (productDataResult.indexOf(product) > -1) {
+      return true;
+    }
+    return false;
+  };
+
+  const addProduct = (colecction, nameProduct) => {
+    colecction
       .add({
-        name: data.name,
+        name: nameProduct,
         lastDate: data.lastDate,
         date: option,
       })
-      .then((quantityAfter) => {
-        console.log('the amount was saved successfully', quantityAfter);
+      .then(() => {
+        viewMessage('Successfully Added', 'success');
       })
       .catch((error) => {
-        console.log('error', error);
+        viewMessage('Error', error);
       });
   };
 
-  var rand = function () {
-    return Math.random().toString(36).substr(2);
-  };
-  var token = function () {
-    return rand() + rand();
+  const validate = async (event) => {
+    event.preventDefault();
+    const colecction = firebase.firestore().collection('products');
+    const nameProduct = formate(data.name);
+    try {
+      const isDuplicate = validateDuplicate(nameProduct);
+      if (isDuplicate) {
+        viewMessage(`The product: ${data.name} already exists!!`, 'error');
+      } else {
+        addProduct(colecction, nameProduct);
+      }
+    } catch (e) {
+      viewMessage('Error', error);
+    }
   };
 
+  const handleInputChange = (event) => {
+    setData({
+      ...data,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const formate = (name) => {
+    return name.toLowerCase().replace(/[\W]+/g, '');
+  };
   return (
     <div>
+      <p role="alert" className={error}>
+        {errorMessage}
+      </p>
       <form>
         <div>
           <label>
             Name:
-            <input
-              type="text"
-              onChange={(e) => setData.name(e.target.value)}
-              name="name"
-            />
+            <input type="text" onChange={handleInputChange} name="name" />
           </label>
         </div>
         <div>
@@ -101,7 +129,7 @@ function Product() {
           </label>
         </div>
         <div>
-          <input type="submit" value="Save" name="Save" onClick={addProduct} />
+          <input type="submit" value="Save" name="Save" onClick={validate} />
         </div>
       </form>
     </div>
