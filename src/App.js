@@ -17,14 +17,14 @@ export default function App() {
             className={`botton ${isActive === 'home' && 'bold-button'}`}
             onClick={() => setIsActive('home')}
           >
-            <Link to="home" className="no-decoration">
+            <Link to="/" className="no-decoration">
               Home
             </Link>
           </button>
         </div>
       </div>
       <Switch>
-        <Route path="/home" exact>
+        <Route path="/" exact>
           <Home />
         </Route>
         <Route path="/list-products">
