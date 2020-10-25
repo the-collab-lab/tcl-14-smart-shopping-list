@@ -20,7 +20,7 @@ function Product() {
   useEffect(() => {
     firebase
       .firestore()
-      .collection('products')
+      .collection(localStorage.getItem('token'))
       .onSnapshot((snapshot) => {
         let products = [];
         snapshot.forEach((doc) => products.push(format(doc.data().name)));
@@ -52,7 +52,9 @@ function Product() {
 
   const validate = async (event) => {
     event.preventDefault();
-    const colecction = firebase.firestore().collection('products');
+    const colecction = firebase
+      .firestore()
+      .collection(localStorage.getItem('token'));
     const nameProduct = format(data.name);
     try {
       const isDuplicate = validateDuplicate(nameProduct);

@@ -3,7 +3,7 @@ import { FirestoreCollection } from 'react-firestore';
 const ListProduct = () => {
   return (
     <FirestoreCollection
-      path="products"
+      path={localStorage.getItem('token')}
       render={({ isloading, data }) => {
         return isloading ? (
           <h1>Loading</h1>

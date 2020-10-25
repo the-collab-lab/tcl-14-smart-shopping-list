@@ -1,0 +1,28 @@
+.input-container {
+  width: 100%;
+}
+
+.regular-style {
+  width: auto;
+  height: 35px;
+  border: none;
+  padding: 0 10px 0 20px;
+}
+
+.regular-style::placeholder {
+  font-size: 14px;
+}
+
+.input-error {
+  border: 1px solid red;
+  color: red;
+  background-color: rgb(214, 177, 177);
+  width: 100%;
+  padding: 7px 7px 7px 15px;
+  border-radius: 5px;
+}
+
+.input-error::placeholder {
+  color: red;
+  font-size: 18px;
+}
