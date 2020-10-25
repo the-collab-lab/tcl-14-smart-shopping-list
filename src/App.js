@@ -13,25 +13,17 @@ export default function App() {
       <div className="body">
         <div className="Buttons">
           <button
-            className={`botton ${isActive === 'shopping' && 'bold-button'}`}
-            onClick={() => setIsActive('shopping')}
-          >
-            <Link to="/list-shopping" className="no-decoration">
-              List shopping
-            </Link>
-          </button>
-          <button
             className={`botton ${isActive === 'home' && 'bold-button'}`}
             onClick={() => setIsActive('home')}
           >
-            <Link to="/tokenList" className="no-decoration">
+            <Link to="home" className="no-decoration">
               Home
             </Link>
           </button>
         </div>
       </div>
       <Switch>
-        <Route path="/" exact>
+        <Route path="/home" exact>
           <Home />
         </Route>
         <Route path="/list-shopping">
