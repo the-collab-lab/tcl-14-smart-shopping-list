@@ -52,7 +52,7 @@ const Home = () => {
           </createToken>
         )}
         <div className="submit-button-container"></div>
-        <Link to="/token-list" className="no-decoration">
+        <Link to="/tokenList" className="no-decoration">
           Create new token.
         </Link>
       </div>

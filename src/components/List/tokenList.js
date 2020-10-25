@@ -8,6 +8,7 @@ export const AddToken = () => {
   const handleNewToken = () => {
     if (!tokenLocal) {
       const newToken = getToken();
+      setToken(newToken);
       localStorage.setItem('token', newToken);
     }
     window.location.href = '/list';
