@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import './home.css';
 import Input from './Loginlist/input/input';
 import Label from './Loginlist/label/label';
@@ -18,7 +18,8 @@ const Home = () => {
     } else {
       localStorage.setItem('token', password);
       setPasswordError(false);
-      //  redirect to = '/list-shopping?'
+
+      window.location.href = 'http://localhost:3000/list-shopping';
     }
   };
   return (
