@@ -19,7 +19,10 @@ const ListProduct = () => {
             <tbody>
               {data.map((value, key) => (
                 <tr key={key}>
-                  <td>{value.name}</td>
+                  <td>
+                    <input type="checkbox" />
+                    {value.name}
+                  </td>
                   <td>{value.date} </td>
                   <td>{value.lastDate}</td>
                 </tr>

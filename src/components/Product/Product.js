@@ -91,7 +91,7 @@ function Product() {
           </label>
         </div>
         <div>
-          <h4>How soon will you buy</h4>
+          <h5>How soon will you buy</h5>
           <div>
             <input
               type="radio"
@@ -125,7 +125,7 @@ function Product() {
         </div>
         <div>
           <label>
-            <h4>Last purchased date</h4>
+            <h5>Last purchased date</h5>
             <input type="text" />
           </label>
         </div>
