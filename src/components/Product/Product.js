@@ -39,7 +39,7 @@ function Product() {
     colecction
       .add({
         name: nameProduct,
-        lastDate: data.lastDate,
+        lastDate: new Date(),
         date: option,
       })
       .then(() => {
