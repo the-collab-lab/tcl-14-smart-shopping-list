@@ -1,6 +1,9 @@
 import React from 'react';
 import { FirestoreCollection } from 'react-firestore';
-const ListProduct = () => {
+
+export default function ListProduct() {
+  const [visible, setVisible] = React.useState(false);
+
   return (
     <FirestoreCollection
       path={localStorage.getItem('token')}
@@ -9,6 +12,13 @@ const ListProduct = () => {
           <h1>Loading</h1>
         ) : (
           <table>
+            <div className="visualList">
+              {visible && <div>Market list</div>}
+              {!visible && <div>You don't have a saved market list yet.</div>}
+              <button onClick={() => setVisible(true)}>
+                Create market list
+              </button>
+            </div>
             <thead>
               <tr>
                 <th>Name</th>
@@ -30,5 +40,4 @@ const ListProduct = () => {
       }}
     />
   );
-};
-export default ListProduct;
+}
