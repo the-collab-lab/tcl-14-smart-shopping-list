@@ -8,41 +8,34 @@ export default function ListProduct() {
   return (
     <FirestoreCollection
       path={localStorage.getItem('token')}
-      render={({ isloading, data }) => {
-        return isloading ? (
-          <h1>Loading</h1>
+      render={({ data }) => {
+        return !marketListCreated && data.length === 0 ? (
+          <div className="visualList">
+            <div>You don't have a saved market list yet.</div>
+            <button onClick={() => setMarketListCreated(true)}>
+              Create market list
+            </button>
+          </div>
         ) : (
           <>
             <table>
-              {!marketListCreated ? (
-                <div className="visualList">
-                  <div>You don't have a saved market list yet.</div>
-                  <button onClick={() => setMarketListCreated(true)}>
-                    Create market list
-                  </button>
-                </div>
-              ) : (
-                <>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Date</th>
-                      <th>Last Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data.map((value, key) => (
-                      <tr key={key}>
-                        <td>{value.name}</td>
-                        <td>{value.date} </td>
-                        <td>{value.lastDate}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </>
-              )}
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Date</th>
+                  <th>Last Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((value, key) => (
+                  <tr key={key}>
+                    <td>{value.name}</td>
+                    <td>{value.date} </td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
-            {marketListCreated && <Product />}
+            {<Product />}
           </>
         );
       }}
