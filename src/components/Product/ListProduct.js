@@ -35,7 +35,7 @@ export default function ListProduct() {
                 ))}
               </tbody>
             </table>
-            {<Product />}
+            <Product />
           </>
         );
       }}
