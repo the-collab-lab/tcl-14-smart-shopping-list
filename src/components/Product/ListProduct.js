@@ -22,7 +22,11 @@ const ListProduct = () => {
             <tbody>
               {data.map((value, key) => {
                 const differenceDays =
-                  (currentDateSeconds - value.lastDate.seconds) / (3600 * 24);
+                  (currentDateSeconds -
+                    (!!value.lastDate && !!value.lastDate.seconds
+                      ? value.lastDate.seconds
+                      : 0)) /
+                  (3600 * 24);
                 return (
                   <tr key={key}>
                     <td>
