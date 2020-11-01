@@ -1,10 +1,8 @@
 import React from 'react';
 import { FirestoreCollection } from 'react-firestore';
-import { differenceInDays } from 'date-fns';
 
 const ListProduct = () => {
-  const lastDate = new Date();
-  const currentDateSeconds = lastDate.getTime() / 1000;
+  const currentDateSeconds = new Date().getTime() / 1000;
 
   return (
     <FirestoreCollection
@@ -23,15 +21,12 @@ const ListProduct = () => {
             </thead>
             <tbody>
               {data.map((value, key) => {
-                const differenceDays = differenceInDays(
-                  value.lastDate.seconds,
-                  currentDateSeconds,
-                );
-
+                const differenceDays =
+                  (currentDateSeconds - value.lastDate.seconds) / (3600 * 24);
                 return (
                   <tr key={key}>
                     <td>
-                      <input type="checkbox" checked={differenceDays === 0} />
+                      <input type="checkbox" checked={differenceDays <= 1} />
                       {value.name}
                     </td>
                     <td>{value.date} </td>
