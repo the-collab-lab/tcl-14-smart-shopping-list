@@ -4,6 +4,7 @@ import Product from './Product';
 
 export default function ListProduct() {
   const [marketListCreated, setMarketListCreated] = React.useState(false);
+  const currentDateSeconds = new Date().getTime() / 1000;
 
   return (
     <FirestoreCollection
@@ -27,12 +28,24 @@ export default function ListProduct() {
                 </tr>
               </thead>
               <tbody>
-                {data.map((value, key) => (
-                  <tr key={key}>
-                    <td>{value.name}</td>
-                    <td>{value.date} </td>
-                  </tr>
-                ))}
+                {data.map((value, key) => {
+                  const differenceDays =
+                    (currentDateSeconds -
+                      (!!value.lastDate && !!value.lastDate.seconds
+                        ? value.lastDate.seconds
+                        : 0)) /
+                    (3600 * 24);
+                  return (
+                    <tr key={key}>
+                      <td>
+                        <input type="checkbox" checked={differenceDays <= 1} />
+                        {value.name}
+                      </td>
+                      <td>{value.date} </td>
+                      <td></td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
             <Product />
