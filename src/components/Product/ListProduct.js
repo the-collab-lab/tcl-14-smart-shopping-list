@@ -38,7 +38,12 @@ export default function ListProduct() {
                   return (
                     <tr key={key}>
                       <td>
-                        <input type="checkbox" checked={differenceDays <= 1} />
+                        <input
+                          type="checkbox"
+                          checked={differenceDays <= 1}
+                          id={value.name}
+                          onChange={() => purchase(data)}
+                        />
                         {value.name}
                       </td>
                       <td>{value.date} </td>

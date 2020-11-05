@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import firebase from '@firebase/app';
+import calculateEstimate from '../../lib/estimates';
 
 function Product() {
   const [option, setOption] = useState('');
