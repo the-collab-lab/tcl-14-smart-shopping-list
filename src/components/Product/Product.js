@@ -13,6 +13,10 @@ function Product() {
   const [errorMessage, setErrorMessage] = useState('');
   const [productData, setProductData] = useState([]);
 
+  function estimateDay(latestInterval, numberOfPurchases) {
+    calculateEstimate(option);
+  }
+
   const viewMessage = (message, error) => {
     setErrorMessage(message);
     setError(error);

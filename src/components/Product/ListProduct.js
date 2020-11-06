@@ -35,6 +35,7 @@ export default function ListProduct() {
                         ? value.lastDate.seconds
                         : 0)) /
                     (3600 * 24);
+
                   return (
                     <tr key={key}>
                       <td>
@@ -42,7 +43,7 @@ export default function ListProduct() {
                           type="checkbox"
                           checked={differenceDays <= 1}
                           id={value.name}
-                          onChange={() => purchase(data)}
+                          //onChange={() => purchase(data)}
                         />
                         {value.name}
                       </td>
