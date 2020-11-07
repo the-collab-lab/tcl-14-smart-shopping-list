@@ -26,6 +26,7 @@ function Product() {
       .onSnapshot((snapshot) => {
         let products = [];
         snapshot.forEach((doc) => products.push(format(doc.data().name)));
+        console.log(products);
         setProductData(products);
       });
   }, []);
@@ -78,7 +79,7 @@ function Product() {
   };
 
   const format = (name) => {
-    return name.toLowerCase().replace(/[\W]+/g, '');
+    return name.toLowerCase().replace(/^\s+|\s+$/g, '');
   };
 
   return (
