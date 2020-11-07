@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import firebase from '@firebase/app';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 function Product() {
   const [option, setOption] = useState('');
@@ -78,8 +80,19 @@ function Product() {
   const format = (name) => {
     return name.toLowerCase().replace(/[\W]+/g, '');
   };
+
   return (
     <div>
+      <Autocomplete
+        id="products-filter"
+        options={productData}
+        getOptionLabel={(productData) => productData}
+        style={{ width: 300 }}
+        renderInput={(params) => (
+          <TextField {...params} label="Filter" variant="outlined" />
+        )}
+      />
+
       <p role="alert" className={error}>
         {errorMessage}
       </p>
