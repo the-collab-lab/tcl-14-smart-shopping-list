@@ -41,6 +41,7 @@ function Product() {
         name: nameProduct,
         lastPurchasedDate: data.lastDate || new Date(),
         option: option,
+        numberPurchases: 1,
       })
       .then(() => {
         viewMessage('Successfully Added', 'success');

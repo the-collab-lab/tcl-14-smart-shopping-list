@@ -3,28 +3,23 @@ import { FirestoreCollection } from 'react-firestore';
 import Product from './Product';
 import calculateEstimate from '../../lib/estimates';
 import firebase from '@firebase/app';
-import differenceInDays from 'date-fns/differenceInDays';
-
-const token = localStorage.getItem('token');
-
-const numberPurchases = (product) => {
-  if (product.numberPurchases === undefined) {
-    return 1;
-  } else {
-    return product.numberPurchases + 1;
-  }
-};
 
 export default function ListProduct() {
   const [marketListCreated, setMarketListCreated] = React.useState(false);
   const currentDateSeconds = new Date().getTime() / 1000;
+  const token = localStorage.getItem('token');
 
+  const getDiff = (date1, date2) => {
+    const diffTime = Math.abs(date2 - date1);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
   const select = (product) => {
-    const numberOfPurchases = numberPurchases(product);
-    const lastPurchaseDate = new Date();
-    const lastInterval = differenceInDays(
-      new Date(product.lastPurchasedDate.seconds * 1000),
-      new Date(lastPurchaseDate.seconds * 1000),
+    const numberOfPurchases = product.numberPurchases + 1;
+    const lastPurchase = new Date();
+    const lastInterval = getDiff(
+      product.lastPurchasedDate.toDate(),
+      lastPurchase,
     );
     const estimate = calculateEstimate(
       product.option,
@@ -33,11 +28,8 @@ export default function ListProduct() {
     );
 
     firebase.firestore().collection(token).doc(product.id).update({
-      name: product.name,
-      option: product.frequency,
-      lastPurchasedDate: new Date(),
       numberPurchases: numberOfPurchases,
-      calculatedEstimate: calculateEstimate,
+      estimate: estimate,
     });
   };
 
