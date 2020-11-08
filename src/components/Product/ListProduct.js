@@ -14,6 +14,7 @@ export default function ListProduct() {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
   };
+
   const select = (product) => {
     const numberOfPurchases = product.numberPurchases + 1;
     const lastPurchase = new Date();
