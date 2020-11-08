@@ -1,6 +1,51 @@
 import React from 'react';
 import { FirestoreCollection } from 'react-firestore';
 import Product from './Product';
+import calculateEstimate from '../../lib/estimates';
+import firebase from '@firebase/app';
+
+const token = localStorage.getItem('token');
+
+const numberPurchases = (product) => {
+  if (product.numberPurchases === undefined) {
+    return 1;
+  } else {
+    return product.numberPurchases + 1;
+  }
+};
+
+const getlastPurchaseDate = (product, todayDate) => {
+  if (product.lastPurchased === null) {
+    return todayDate;
+  } else {
+    return product.lastPurchased;
+  }
+};
+
+const purchase = (product) => {
+  const numberOfPurchases = numberPurchases(product);
+  const date = new Date();
+  const lastPurchaseDate = getlastPurchaseDate(product, date);
+  const lastInterval =
+    product.oldPurchased.getDay() - lastPurchaseDate.getDay();
+
+  firebase
+    .firestore()
+    .collection(token)
+    .doc(product.id)
+    .update({
+      name: product.name,
+      frequency: product.frequency,
+      lastPurchased: new Date(),
+      oldPurchased: product.lastPurchased,
+      numberPurchases: numberOfPurchases,
+      calculatedEstimate: calculateEstimate(
+        product.frequency,
+        lastInterval,
+        numberOfPurchases,
+      ),
+    });
+};
 
 export default function ListProduct() {
   const [marketListCreated, setMarketListCreated] = React.useState(false);
@@ -43,7 +88,7 @@ export default function ListProduct() {
                           type="checkbox"
                           checked={differenceDays <= 1}
                           id={value.name}
-                          //onChange={() => purchase(data)}
+                          onChange={() => purchase(value)}
                         />
                         {value.name}
                       </td>
