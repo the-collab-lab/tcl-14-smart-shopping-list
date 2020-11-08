@@ -3,6 +3,7 @@ import { FirestoreCollection } from 'react-firestore';
 import Product from './Product';
 import calculateEstimate from '../../lib/estimates';
 import firebase from '@firebase/app';
+import differenceInDays from 'date-fns/differenceInDays';
 
 const token = localStorage.getItem('token');
 
@@ -22,34 +23,45 @@ const getlastPurchaseDate = (product, todayDate) => {
   }
 };
 
-const purchase = (product) => {
-  const numberOfPurchases = numberPurchases(product);
-  const date = new Date();
-  const lastPurchaseDate = getlastPurchaseDate(product, date);
-  const lastInterval =
-    product.oldPurchased.getDay() - lastPurchaseDate.getDay();
-
-  firebase
-    .firestore()
-    .collection(token)
-    .doc(product.id)
-    .update({
-      name: product.name,
-      frequency: product.frequency,
-      lastPurchased: new Date(),
-      oldPurchased: product.lastPurchased,
-      numberPurchases: numberOfPurchases,
-      calculatedEstimate: calculateEstimate(
-        product.frequency,
-        lastInterval,
-        numberOfPurchases,
-      ),
-    });
-};
-
 export default function ListProduct() {
   const [marketListCreated, setMarketListCreated] = React.useState(false);
   const currentDateSeconds = new Date().getTime() / 1000;
+
+  const purchase = (product) => {
+    console.log('entro', product);
+    const numberOfPurchases = numberPurchases(product);
+    console.log('numberOfPurchases', numberOfPurchases);
+    const date = new Date();
+    const lastPurchaseDate = getlastPurchaseDate(product, date);
+    console.log('lastPurchaseDate ', new Date(lastPurchaseDate.seconds * 1000));
+    console.log(
+      'product.oldPurchased ',
+      new Date(product.oldPurchased.seconds * 1000),
+    );
+    const lastInterval = differenceInDays(
+      new Date(product.oldPurchased.seconds * 1000),
+      new Date(lastPurchaseDate.seconds * 1000),
+    );
+
+    console.log('lastInterval: ', lastInterval);
+
+    firebase
+      .firestore()
+      .collection(token)
+      .doc(product.id)
+      .update({
+        name: product.name,
+        frequency: product.frequency,
+        lastPurchased: new Date(),
+        oldPurchased: product.lastPurchased,
+        numberPurchases: numberOfPurchases,
+        calculatedEstimate: calculateEstimate(
+          product.frequency,
+          lastInterval,
+          numberOfPurchases,
+        ),
+      });
+  };
 
   return (
     <FirestoreCollection
@@ -80,7 +92,6 @@ export default function ListProduct() {
                         ? value.lastDate.seconds
                         : 0)) /
                     (3600 * 24);
-
                   return (
                     <tr key={key}>
                       <td>
