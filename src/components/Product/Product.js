@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import firebase from '@firebase/app';
-import calculateEstimate from '../../lib/estimates';
 
 function Product() {
   const [option, setOption] = useState('');
@@ -12,10 +11,6 @@ function Product() {
   const [error, setError] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [productData, setProductData] = useState([]);
-
-  function estimateDay(latestInterval) {
-    calculateEstimate(option, latestInterval, productData.length);
-  }
 
   const viewMessage = (message, error) => {
     setErrorMessage(message);
@@ -44,8 +39,9 @@ function Product() {
     colecction
       .add({
         name: nameProduct,
-        lastDate: data.lastDate || new Date(),
-        date: option,
+        lastPurchased: data.lastDate || new Date(),
+        frequency: option,
+        oldPurchased: new Date(),
       })
       .then(() => {
         viewMessage('Successfully Added', 'success');

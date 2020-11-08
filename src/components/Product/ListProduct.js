@@ -28,16 +28,9 @@ export default function ListProduct() {
   const currentDateSeconds = new Date().getTime() / 1000;
 
   const purchase = (product) => {
-    console.log('entro', product);
     const numberOfPurchases = numberPurchases(product);
-    console.log('numberOfPurchases', numberOfPurchases);
     const date = new Date();
     const lastPurchaseDate = getlastPurchaseDate(product, date);
-    console.log('lastPurchaseDate ', new Date(lastPurchaseDate.seconds * 1000));
-    console.log(
-      'product.oldPurchased ',
-      new Date(product.oldPurchased.seconds * 1000),
-    );
     const lastInterval = differenceInDays(
       new Date(product.oldPurchased.seconds * 1000),
       new Date(lastPurchaseDate.seconds * 1000),
