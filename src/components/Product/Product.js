@@ -39,9 +39,8 @@ function Product() {
     colecction
       .add({
         name: nameProduct,
-        lastPurchased: data.lastDate || new Date(),
-        frequency: option,
-        oldPurchased: new Date(),
+        lastPurchasedDate: data.lastDate || new Date(),
+        option: option,
       })
       .then(() => {
         viewMessage('Successfully Added', 'success');

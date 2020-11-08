@@ -15,45 +15,30 @@ const numberPurchases = (product) => {
   }
 };
 
-const getlastPurchaseDate = (product, todayDate) => {
-  if (product.lastPurchased === null) {
-    return todayDate;
-  } else {
-    return product.lastPurchased;
-  }
-};
-
 export default function ListProduct() {
   const [marketListCreated, setMarketListCreated] = React.useState(false);
   const currentDateSeconds = new Date().getTime() / 1000;
 
-  const purchase = (product) => {
+  const select = (product) => {
     const numberOfPurchases = numberPurchases(product);
-    const date = new Date();
-    const lastPurchaseDate = getlastPurchaseDate(product, date);
+    const lastPurchaseDate = new Date();
     const lastInterval = differenceInDays(
-      new Date(product.oldPurchased.seconds * 1000),
+      new Date(product.lastPurchasedDate.seconds * 1000),
       new Date(lastPurchaseDate.seconds * 1000),
     );
+    const estimate = calculateEstimate(
+      product.option,
+      lastInterval,
+      numberOfPurchases,
+    );
 
-    console.log('lastInterval: ', lastInterval);
-
-    firebase
-      .firestore()
-      .collection(token)
-      .doc(product.id)
-      .update({
-        name: product.name,
-        frequency: product.frequency,
-        lastPurchased: new Date(),
-        oldPurchased: product.lastPurchased,
-        numberPurchases: numberOfPurchases,
-        calculatedEstimate: calculateEstimate(
-          product.frequency,
-          lastInterval,
-          numberOfPurchases,
-        ),
-      });
+    firebase.firestore().collection(token).doc(product.id).update({
+      name: product.name,
+      option: product.frequency,
+      lastPurchasedDate: new Date(),
+      numberPurchases: numberOfPurchases,
+      calculatedEstimate: calculateEstimate,
+    });
   };
 
   return (
@@ -92,7 +77,7 @@ export default function ListProduct() {
                           type="checkbox"
                           checked={differenceDays <= 1}
                           id={value.name}
-                          onChange={() => purchase(value)}
+                          onChange={() => select(value)}
                         />
                         {value.name}
                       </td>
