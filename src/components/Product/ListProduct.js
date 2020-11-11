@@ -1,3 +1,4 @@
+import { Search } from '@material-ui/icons';
 import React, { useState, useEffect } from 'react';
 import { FirestoreCollection } from 'react-firestore';
 import Product from './Product';
@@ -45,7 +46,11 @@ export default function ListProduct() {
           </div>
         ) : (
           <>
-            <input value={text} onChange={(text) => filter(text)} />
+            <input
+              type="search"
+              value={text}
+              onChange={(text) => filter(text)}
+            />
             <table>
               <thead>
                 <tr>
