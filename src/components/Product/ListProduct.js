@@ -6,7 +6,7 @@ import Product from './Product';
 export default function ListProduct() {
   const [marketListCreated, setMarketListCreated] = React.useState(false);
   const [productsList, setproductsList] = useState([]);
-  const [text, setext] = useState([]);
+  const [text, setext] = useState('');
   const [productsBackup, setproductsBackup] = useState([]);
 
   let products = [];
@@ -27,7 +27,7 @@ export default function ListProduct() {
   };
 
   const list = !text
-    ? productsList
+    ? products
     : productsList.filter((productsList) =>
         productsList.name.toLowerCase().includes(text.toLocaleLowerCase()),
       );
