@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import firebase from '@firebase/app';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 
 function Product() {
   const [option, setOption] = useState('');
   const [data, setData] = useState({
     name: '',
-    lastDate: null,
+    lastDate: '',
   });
 
   const [error, setError] = useState('');
@@ -84,16 +82,6 @@ function Product() {
 
   return (
     <div>
-      <Autocomplete
-        id="products-filter"
-        options={productData}
-        getOptionLabel={(productData) => productData}
-        style={{ width: 300 }}
-        renderInput={(params) => (
-          <TextField {...params} label="Filter" variant="outlined" />
-        )}
-      />
-
       <p role="alert" className={error}>
         {errorMessage}
       </p>
@@ -136,12 +124,6 @@ function Product() {
             />
             <label> Not soon (in the next 30 days) </label>
           </div>
-        </div>
-        <div>
-          <label>
-            <h4>Last purchased date</h4>
-            <input type="text" />
-          </label>
         </div>
         <div>
           <input type="submit" value="Save" name="Save" onClick={validate} />
