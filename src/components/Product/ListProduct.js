@@ -59,8 +59,9 @@ export default function ListProduct() {
                 {data.map((value, key) => {
                   const differenceDays =
                     (currentDateSeconds -
-                      (!!value.lastDate && !!value.lastDate.seconds
-                        ? value.lastDate.seconds
+                      (!!value.lastPurchasedDate &&
+                      !!value.lastPurchasedDate.seconds
+                        ? value.lastPurchasedDate.seconds
                         : 0)) /
                     (3600 * 24);
                   return (
