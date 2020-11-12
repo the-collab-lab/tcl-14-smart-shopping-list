@@ -6,6 +6,7 @@ import firebase from '@firebase/app';
 import swal from 'sweetalert';
 import moment from 'moment';
 
+import styles from './listProduct.module.css';
 
 export default function ListProduct() {
   const [marketListCreated, setMarketListCreated] = React.useState(false);
@@ -147,13 +148,13 @@ export default function ListProduct() {
                             )}{' '}
                           </td>
                           <td>
-                        <input
-                          type="submit"
-                          value="Delete"
-                          name="Delete"
-                          onClick={() => showAlert(value)}
-                        />
-                      </td>
+                            <input
+                              type="submit"
+                              value="Delete"
+                              name="Delete"
+                              onClick={() => showAlert(value)}
+                            />
+                          </td>
                         </tr>
                       );
                     })
@@ -184,13 +185,15 @@ export default function ListProduct() {
                             )}{' '}
                           </td>
                           <td>
-                        <input
-                          type="submit"
-                          value="Delete"
-                          name="Delete"
-                          onClick={() => showAlert(value)}
-                        />
-                      </td>
+                            <input
+                              type="submit"
+                              value="Delete"
+                              name="Delete"
+                              onClick={() => showAlert(value)}
+                            />
+                          </td>
+                          <td className={styles.date}>{value.date} </td>
+                          <td></td>
                         </tr>
                       );
                     })}
