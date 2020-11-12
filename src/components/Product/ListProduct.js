@@ -34,6 +34,20 @@ export default function ListProduct() {
     });
   };
 
+  const Delete = async (productid) => {
+    firebase
+      .firestore()
+      .collection(token)
+      .doc(productid)
+      .delete()
+      .then(() => {
+        console.log('eliminado');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <FirestoreCollection
       path={localStorage.getItem('token')}
@@ -53,6 +67,7 @@ export default function ListProduct() {
                   <th>Name</th>
                   <th>Date</th>
                   <th>Last Date</th>
+                  <th>Eliminar</th>
                 </tr>
               </thead>
               <tbody>
@@ -77,6 +92,12 @@ export default function ListProduct() {
                       </td>
                       <td>{value.date} </td>
                       <td></td>
+                      <input
+                        type="submit"
+                        value="Delete"
+                        name="Delete"
+                        onClick={() => Delete(value.id)}
+                      />
                     </tr>
                   );
                 })}
