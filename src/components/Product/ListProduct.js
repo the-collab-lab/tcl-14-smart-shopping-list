@@ -194,6 +194,7 @@ export default function ListProduct() {
                           </td>
                           <td className={styles.date}>{value.date} </td>
                           <td></td>
+                          <td className={styles.date}>{value.estimate}</td>
                         </tr>
                       );
                     })}
