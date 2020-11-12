@@ -117,9 +117,9 @@ export default function ListProduct() {
                 </tr>
               </thead>
               <tbody>
-                //it is validated if data and products are the same, //it makes
+                {/* it is validated if data and products are the same, //it makes
                 the table with the list filter, // if the table of products is
-                not traversed with the data.
+                not traversed with the data. */}
                 {data.length === products.length
                   ? list.map((value, key) => {
                       const differenceDays =
@@ -158,46 +158,51 @@ export default function ListProduct() {
                         </tr>
                       );
                     })
-                  : data.map((value, key) => {
-                      const differenceDays =
-                        (currentDateSeconds -
-                          (!!value.lastPurchasedDate &&
-                          !!value.lastPurchasedDate.seconds
-                            ? value.lastPurchasedDate.seconds
-                            : 0)) /
-                        (3600 * 24);
-                      return (
-                        <tr key={key}>
-                          <td>
-                            <input
-                              type="checkbox"
-                              checked={differenceDays <= 1}
-                              id={value.name}
-                              onChange={() => select(value)}
-                            />
-                            {value.name}
-                          </td>
-                          <td>{value.option} </td>
-                          <td>{value.estimate} </td>
-                          <td>
-                            {moment(value.lastPurchasedDate.toDate()).format(
-                              'dddd, MMMM Do YYYY, h:mm:ss a',
-                            )}{' '}
-                          </td>
-                          <td>
-                            <input
-                              type="submit"
-                              value="Delete"
-                              name="Delete"
-                              onClick={() => showAlert(value)}
-                            />
-                          </td>
-                          <td className={styles.date}>{value.date} </td>
-                          <td></td>
-                          <td className={styles.date}>{value.estimate}</td>
-                        </tr>
-                      );
-                    })}
+                  : data
+                      .sort(
+                        (a, b) =>
+                          parseFloat(a.estimate) - parseFloat(b.estimate),
+                      )
+                      .map((value, key) => {
+                        const differenceDays =
+                          (currentDateSeconds -
+                            (!!value.lastPurchasedDate &&
+                            !!value.lastPurchasedDate.seconds
+                              ? value.lastPurchasedDate.seconds
+                              : 0)) /
+                          (3600 * 24);
+                        return (
+                          <tr key={key}>
+                            <td>
+                              <input
+                                type="checkbox"
+                                checked={differenceDays <= 1}
+                                id={value.name}
+                                onChange={() => select(value)}
+                              />
+                              {value.name}
+                            </td>
+                            <td>{value.option} </td>
+                            <td>{value.estimate} </td>
+                            <td>
+                              {moment(value.lastPurchasedDate.toDate()).format(
+                                'dddd, MMMM Do YYYY, h:mm:ss a',
+                              )}{' '}
+                            </td>
+                            <td>
+                              <input
+                                type="submit"
+                                value="Delete"
+                                name="Delete"
+                                onClick={() => showAlert(value)}
+                              />
+                            </td>
+                            <td className={styles.date}>{value.date} </td>
+                            <td></td>
+                            <td className={styles.date}>{value.estimate}</td>
+                          </tr>
+                        );
+                      })}
               </tbody>
             </table>
             <Product />
