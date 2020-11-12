@@ -3,6 +3,7 @@ import { FirestoreCollection } from 'react-firestore';
 import Product from './Product';
 import calculateEstimate from '../../lib/estimates';
 import firebase from '@firebase/app';
+import styles from './listProduct.module.css';
 
 export default function ListProduct() {
   const [marketListCreated, setMarketListCreated] = React.useState(false);
@@ -75,7 +76,7 @@ export default function ListProduct() {
                         />
                         {value.name}
                       </td>
-                      <td>{value.date} </td>
+                      <td className={styles.date}>{value.date} </td>
                       <td></td>
                     </tr>
                   );
