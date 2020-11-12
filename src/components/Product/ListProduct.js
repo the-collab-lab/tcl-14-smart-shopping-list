@@ -58,31 +58,35 @@ export default function ListProduct() {
                 </tr>
               </thead>
               <tbody>
-                {data.map((value, key) => {
-                  const differenceDays =
-                    (currentDateSeconds -
-                      (!!value.lastPurchasedDate &&
-                      !!value.lastPurchasedDate.seconds
-                        ? value.lastPurchasedDate.seconds
-                        : 0)) /
-                    (3600 * 24);
-                  return (
-                    <tr key={key}>
-                      <td>
-                        <input
-                          type="checkbox"
-                          checked={differenceDays <= 1}
-                          id={value.name}
-                          onChange={() => select(value)}
-                        />
-                        {value.name}
-                      </td>
-                      <td className={styles.date}>{value.option} </td>
-                      <td></td>
-                      <td className={styles.date}>{value.estimate}</td>
-                    </tr>
-                  );
-                })}
+                {data
+                  .sort(
+                    (a, b) => parseFloat(a.estimate) - parseFloat(b.estimate),
+                  )
+                  .map((value, key) => {
+                    const differenceDays =
+                      (currentDateSeconds -
+                        (!!value.lastPurchasedDate &&
+                        !!value.lastPurchasedDate.seconds
+                          ? value.lastPurchasedDate.seconds
+                          : 0)) /
+                      (3600 * 24);
+                    return (
+                      <tr key={key}>
+                        <td>
+                          <input
+                            type="checkbox"
+                            checked={differenceDays <= 1}
+                            id={value.name}
+                            onChange={() => select(value)}
+                          />
+                          {value.name}
+                        </td>
+                        <td className={styles.date}>{value.option} </td>
+                        <td></td>
+                        <td className={styles.date}>{value.estimate}</td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
             <Product />
