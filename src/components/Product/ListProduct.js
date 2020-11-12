@@ -54,6 +54,7 @@ export default function ListProduct() {
                   <th>Name</th>
                   <th>Date</th>
                   <th>Last Date</th>
+                  <th>Estimate</th>
                 </tr>
               </thead>
               <tbody>
@@ -76,8 +77,9 @@ export default function ListProduct() {
                         />
                         {value.name}
                       </td>
-                      <td className={styles.date}>{value.date} </td>
+                      <td className={styles.date}>{value.option} </td>
                       <td></td>
+                      <td className={styles.date}>{value.estimate}</td>
                     </tr>
                   );
                 })}
