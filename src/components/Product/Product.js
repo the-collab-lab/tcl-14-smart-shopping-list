@@ -5,7 +5,7 @@ function Product() {
   const [option, setOption] = useState('');
   const [data, setData] = useState({
     name: '',
-    lastDate: null,
+    lastDate: '',
   });
 
   const [error, setError] = useState('');
@@ -24,6 +24,7 @@ function Product() {
       .onSnapshot((snapshot) => {
         let products = [];
         snapshot.forEach((doc) => products.push(format(doc.data().name)));
+        console.log(products);
         setProductData(products);
       });
   }, []);
@@ -77,8 +78,9 @@ function Product() {
   };
 
   const format = (name) => {
-    return name.toLowerCase().replace(/[\W]+/g, '');
+    return name.toLowerCase().replace(/^\s+|\s+$/g, '');
   };
+
   return (
     <div>
       <p role="alert" className={error}>
@@ -123,12 +125,6 @@ function Product() {
             />
             <label> Not soon (in the next 30 days) </label>
           </div>
-        </div>
-        <div>
-          <label>
-            <h5>Last purchased date</h5>
-            <input type="text" />
-          </label>
         </div>
         <div>
           <input type="submit" value="Save" name="Save" onClick={validate} />
