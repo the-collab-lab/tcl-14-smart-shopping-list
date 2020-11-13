@@ -3,6 +3,7 @@ import { FirestoreCollection } from 'react-firestore';
 import Product from './Product';
 import calculateEstimate from '../../lib/estimates';
 import firebase from '@firebase/app';
+import swal from 'sweetalert';
 
 export default function ListProduct() {
   const [marketListCreated, setMarketListCreated] = React.useState(false);
@@ -46,6 +47,24 @@ export default function ListProduct() {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const showAlert = (value) => {
+    swal({
+      title: 'Delete',
+      text: `Are you sure about delete ${value.name} from the list?`,
+      icon: 'warning',
+      buttons: ['Not', 'Yes'],
+    }).then((answer) => {
+      if (answer) {
+        Delete(value.id);
+        swal({
+          text: 'this article was deleted with exit',
+          icon: 'success',
+          timer: '2000',
+        });
+      }
+    });
   };
 
   return (
@@ -96,7 +115,7 @@ export default function ListProduct() {
                         type="submit"
                         value="Delete"
                         name="Delete"
-                        onClick={() => Delete(value.id)}
+                        onClick={() => showAlert(value)}
                       />
                     </tr>
                   );
