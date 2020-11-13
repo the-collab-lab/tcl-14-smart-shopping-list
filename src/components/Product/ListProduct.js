@@ -1,4 +1,3 @@
-import { Search } from '@material-ui/icons';
 import React, { useState, useEffect } from 'react';
 import { FirestoreCollection } from 'react-firestore';
 import Product from './Product';
@@ -10,16 +9,14 @@ export default function ListProduct() {
   const [marketListCreated, setMarketListCreated] = React.useState(false);
   const [productsList, setproductsList] = useState([]);
   const [text, setext] = useState('');
-  const [productsBackup, setproductsBackup] = useState([]);
 
   let products = [];
 
   const filter = (event) => {
-    setproductsBackup(products);
-    var text = event.target.value;
+    let text = event.target.value;
     const data = products;
 
-    const newData = data.filter(function (item) {
+    const newData = data.filter((item) => {
       const itemData = item.name.toUpperCase();
       const textData = text.toUpperCase();
       return itemData.indexOf(textData) > -1;
@@ -34,7 +31,7 @@ export default function ListProduct() {
     : productsList.filter((productsList) =>
         productsList.name.toLowerCase().includes(text.toLocaleLowerCase()),
       );
-  
+
   const currentDateSeconds = new Date().getTime() / 1000;
   const token = localStorage.getItem('token');
 
@@ -75,6 +72,8 @@ export default function ListProduct() {
       .catch((error) => {
         console.log(error);
       });
+    products = [];
+    setproductsList();
   };
 
   const showAlert = (value) => {
@@ -118,8 +117,6 @@ export default function ListProduct() {
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Date</th>
-                  <th>Last Date</th>
                   <th>Eliminar</th>
                 </tr>
               </thead>
@@ -143,14 +140,14 @@ export default function ListProduct() {
                         />
                         {value.name}
                       </td>
-                      <td>{value.date} </td>
-                      <td></td>
-                      <input
-                        type="submit"
-                        value="Delete"
-                        name="Delete"
-                        onClick={() => showAlert(value)}
-                      />
+                      <td>
+                        <input
+                          type="submit"
+                          value="Delete"
+                          name="Delete"
+                          onClick={() => showAlert(value)}
+                        />
+                      </td>
                     </tr>
                   );
                 })}
