@@ -40,8 +40,9 @@ function Product() {
     colecction
       .add({
         name: nameProduct,
-        lastDate: data.lastDate,
-        date: option,
+        lastPurchasedDate: data.lastDate || new Date(),
+        option: option,
+        numberPurchases: 1,
       })
       .then(() => {
         viewMessage('Successfully Added', 'success');
@@ -93,7 +94,7 @@ function Product() {
           </label>
         </div>
         <div>
-          <h4>How soon will you buy</h4>
+          <h5>How soon will you buy</h5>
           <div>
             <input
               type="radio"
