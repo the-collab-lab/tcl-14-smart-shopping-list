@@ -70,8 +70,18 @@ export default function ListProduct() {
                           ? value.lastPurchasedDate.seconds
                           : 0)) /
                       (3600 * 24);
+                    let colour = '';
+                    if (value.option == 7) {
+                      colour = styles.colour1;
+                    }
+                    if (value.option == 14) {
+                      colour = styles.colour2;
+                    }
+                    if (value.option == 30) {
+                      colour = styles.colour3;
+                    }
                     return (
-                      <tr key={key}>
+                      <tr key={key} className={colour}>
                         <td>
                           <input
                             type="checkbox"
