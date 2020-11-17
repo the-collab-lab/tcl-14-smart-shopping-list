@@ -8,28 +8,20 @@ import swal from 'sweetalert';
 export default function ListProduct() {
   const [marketListCreated, setMarketListCreated] = React.useState(false);
   const [productsList, setproductsList] = useState([]);
+  const [productsBackup, setproductsBackup] = useState([]);
   const [text, setext] = useState('');
 
   let products = [];
 
   const filter = (event) => {
-    let text = event.target.value;
-    const data = products;
-
-    const newData = data.filter((item) => {
-      const itemData = item.name.toUpperCase();
-      const textData = text.toUpperCase();
-      return itemData.indexOf(textData) > -1;
-    });
-
-    setproductsList(newData);
-    setext(text);
+    setproductsList(products);
+    setext(event.target.value);
   };
 
   const list = !text
     ? products
-    : productsList.filter((productsList) =>
-        productsList.name.toLowerCase().includes(text.toLocaleLowerCase()),
+    : productsList.filter(
+        (item) => item.name.toUpperCase().indexOf(text.toUpperCase()) > -1,
       );
 
   const currentDateSeconds = new Date().getTime() / 1000;
@@ -72,8 +64,6 @@ export default function ListProduct() {
       .catch((error) => {
         console.log(error);
       });
-    products = [];
-    setproductsList();
   };
 
   const showAlert = (value) => {
