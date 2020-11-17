@@ -1,39 +1,28 @@
-import { Search } from '@material-ui/icons';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FirestoreCollection } from 'react-firestore';
 import Product from './Product';
 import calculateEstimate from '../../lib/estimates';
 import firebase from '@firebase/app';
+import moment from 'moment';
 
 export default function ListProduct() {
   const [marketListCreated, setMarketListCreated] = React.useState(false);
   const [productsList, setproductsList] = useState([]);
   const [text, setext] = useState('');
-  const [productsBackup, setproductsBackup] = useState([]);
 
   let products = [];
 
   const filter = (event) => {
-    setproductsBackup(products);
-    var text = event.target.value;
-    const data = products;
-
-    const newData = data.filter(function (item) {
-      const itemData = item.name.toUpperCase();
-      const textData = text.toUpperCase();
-      return itemData.indexOf(textData) > -1;
-    });
-
-    setproductsList(newData);
-    setext(text);
+    setproductsList(products);
+    setext(event.target.value);
   };
 
   const list = !text
     ? products
-    : productsList.filter((productsList) =>
-        productsList.name.toLowerCase().includes(text.toLocaleLowerCase()),
+    : productsList.filter(
+        (item) => item.name.toUpperCase().indexOf(text.toUpperCase()) > -1,
       );
-  
+
   const currentDateSeconds = new Date().getTime() / 1000;
   const token = localStorage.getItem('token');
 
@@ -85,35 +74,70 @@ export default function ListProduct() {
               <thead>
                 <tr>
                   <th>Name</th>
+                  <th>Option</th>
+                  <th>Estimate</th>
                   <th>Date</th>
-                  <th>Last Date</th>
                 </tr>
               </thead>
               <tbody>
-                {list.map((value, key) => {
-                  const differenceDays =
-                    (currentDateSeconds -
-                      (!!value.lastPurchasedDate &&
-                      !!value.lastPurchasedDate.seconds
-                        ? value.lastPurchasedDate.seconds
-                        : 0)) /
-                    (3600 * 24);
-                  return (
-                    <tr key={key}>
-                      <td>
-                        <input
-                          type="checkbox"
-                          checked={differenceDays <= 1}
-                          id={value.name}
-                          onChange={() => select(value)}
-                        />
-                        {value.name}
-                      </td>
-                      <td>{value.date} </td>
-                      <td></td>
-                    </tr>
-                  );
-                })}
+                {data.length === productsList.length
+                  ? list.map((value, key) => {
+                      const differenceDays =
+                        (currentDateSeconds -
+                          (!!value.lastPurchasedDate &&
+                          !!value.lastPurchasedDate.seconds
+                            ? value.lastPurchasedDate.seconds
+                            : 0)) /
+                        (3600 * 24);
+                      return (
+                        <tr key={key}>
+                          <td>
+                            <input
+                              type="checkbox"
+                              checked={differenceDays <= 1}
+                              id={value.name}
+                              onChange={() => select(value)}
+                            />
+                            {value.name}
+                          </td>
+                          <td>{value.estimate} </td>
+                          <td>
+                            {moment(value.lastPurchasedDate.toDate()).format(
+                              'dddd, MMMM Do YYYY, h:mm:ss a',
+                            )}{' '}
+                          </td>
+                        </tr>
+                      );
+                    })
+                  : data.map((value, key) => {
+                      const differenceDays =
+                        (currentDateSeconds -
+                          (!!value.lastPurchasedDate &&
+                          !!value.lastPurchasedDate.seconds
+                            ? value.lastPurchasedDate.seconds
+                            : 0)) /
+                        (3600 * 24);
+                      return (
+                        <tr key={key}>
+                          <td>
+                            <input
+                              type="checkbox"
+                              checked={differenceDays <= 1}
+                              id={value.name}
+                              onChange={() => select(value)}
+                            />
+                            {value.name}
+                          </td>
+                          <td>{value.option} </td>
+                          <td>{value.estimate} </td>
+                          <td>
+                            {moment(value.lastPurchasedDate.toDate()).format(
+                              'dddd, MMMM Do YYYY, h:mm:ss a',
+                            )}{' '}
+                          </td>
+                        </tr>
+                      );
+                    })}
               </tbody>
             </table>
             <Product />

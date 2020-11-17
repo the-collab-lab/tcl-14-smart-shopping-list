@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import firebase from '@firebase/app';
+import calculateEstimate from '../../lib/estimates';
 
 function Product() {
   const [option, setOption] = useState('');
   const [data, setData] = useState({
     name: '',
     lastDate: '',
+    numberPurchases: 1,
   });
 
   const [error, setError] = useState('');
@@ -36,13 +38,28 @@ function Product() {
     return false;
   };
 
+  const getDiff = (date1, date2) => {
+    const diffTime = Math.abs(date2 - date1);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
+
+  const lastInterval = getDiff(new Date(), new Date());
+
+  const estimate = calculateEstimate(
+    option,
+    lastInterval,
+    data.numberPurchases,
+  );
+
   const addProduct = (colecction, nameProduct) => {
     colecction
       .add({
         name: nameProduct,
         lastPurchasedDate: data.lastDate || new Date(),
         option: option,
-        numberPurchases: 1,
+        numberPurchases: data.numberPurchases,
+        estimate: estimate,
       })
       .then(() => {
         viewMessage('Successfully Added', 'success');
