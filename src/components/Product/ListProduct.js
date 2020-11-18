@@ -80,6 +80,9 @@ export default function ListProduct() {
                 </tr>
               </thead>
               <tbody>
+                //it is validated if data and products are the same, //it makes
+                the table with the list filter, // if the table of products is
+                not traversed with the data.
                 {data.length === products.length
                   ? list.map((value, key) => {
                       const differenceDays =

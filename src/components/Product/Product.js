@@ -46,6 +46,7 @@ function Product() {
 
   const lastInterval = getDiff(new Date(), new Date());
 
+  //These methods validate the estimate, of the purchase as it is the first purchase there is always zero.
   const estimate = calculateEstimate(
     option,
     lastInterval,
