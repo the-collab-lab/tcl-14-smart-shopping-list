@@ -80,7 +80,7 @@ export default function ListProduct() {
                 </tr>
               </thead>
               <tbody>
-                {data.length === productsList.length
+                {data.length === products.length
                   ? list.map((value, key) => {
                       const differenceDays =
                         (currentDateSeconds -
@@ -100,6 +100,7 @@ export default function ListProduct() {
                             />
                             {value.name}
                           </td>
+                          <td>{value.option} </td>
                           <td>{value.estimate} </td>
                           <td>
                             {moment(value.lastPurchasedDate.toDate()).format(
