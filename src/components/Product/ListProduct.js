@@ -48,6 +48,7 @@ export default function ListProduct() {
     firebase.firestore().collection(token).doc(product.id).update({
       numberPurchases: numberOfPurchases,
       estimate: estimate,
+      lastPurchasedDate: new Date(),
     });
   };
 
