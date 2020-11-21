@@ -35,10 +35,59 @@ export default function ListProduct() {
     });
   };
 
+  const sortAlphabeticallyByNameAttribute = (input) => {
+    return input.sort(function (a, b) {
+      if (a.name.toLowerCase() > b.name.toLowerCase()) {
+        return 1;
+      }
+      if (a.name.toLowerCase() < b.name.toLowerCase()) {
+        return -1;
+      }
+      return 0;
+    });
+  };
+
+  const buildProductItemsGroup = (productItemsArray, colorClassName) => {
+    return productItemsArray.map((productItem, key) => {
+      const differenceDays =
+        (currentDateSeconds -
+          (!!productItem.lastPurchasedDate &&
+          !!productItem.lastPurchasedDate.seconds
+            ? productItem.lastPurchasedDate.seconds
+            : 0)) /
+        (3600 * 24);
+      return (
+        <tr key={key} className={colorClassName}>
+          <td>
+            <input
+              type="checkbox"
+              checked={differenceDays <= 1}
+              id={productItem.name}
+              onChange={() => select(productItem)}
+            />
+            {productItem.name}
+          </td>
+          <td className={styles.date}>{productItem.option} </td>
+          <td></td>
+          <td className={styles.date}>{productItem.estimate}</td>
+        </tr>
+      );
+    });
+  };
+
   return (
     <FirestoreCollection
       path={localStorage.getItem('token')}
       render={({ data }) => {
+        const lowConcurrencyProductItems = sortAlphabeticallyByNameAttribute(
+          data.filter((productItem) => productItem.option === '7'),
+        );
+        const mediumConcurrencyProductItems = sortAlphabeticallyByNameAttribute(
+          data.filter((productItem) => productItem.option === '14'),
+        );
+        const highConcurrencyProductItems = sortAlphabeticallyByNameAttribute(
+          data.filter((productItem) => productItem.option === '30'),
+        );
         return !marketListCreated && data.length === 0 ? (
           <div className="visualList">
             <div>You don't have a saved market list yet.</div>
@@ -58,55 +107,18 @@ export default function ListProduct() {
                 </tr>
               </thead>
               <tbody>
-                {data
-                  .sort(function (a, b) {
-                    if (a.name > b.name) {
-                      return 1;
-                    }
-                    if (a.name < b.name) {
-                      return -1;
-                    }
-                    return 0;
-                  })
-                  .sort(
-                    (a, b) => parseFloat(a.estimate) - parseFloat(b.estimate),
-                  )
-
-                  .map((value, key) => {
-                    const differenceDays =
-                      (currentDateSeconds -
-                        (!!value.lastPurchasedDate &&
-                        !!value.lastPurchasedDate.seconds
-                          ? value.lastPurchasedDate.seconds
-                          : 0)) /
-                      (3600 * 24);
-                    let colour = '';
-                    if (value.option == 7) {
-                      colour = styles.colour1;
-                    }
-                    if (value.option == 14) {
-                      colour = styles.colour2;
-                    }
-                    if (value.option == 30) {
-                      colour = styles.colour3;
-                    }
-                    return (
-                      <tr key={key} className={colour}>
-                        <td>
-                          <input
-                            type="checkbox"
-                            checked={differenceDays <= 1}
-                            id={value.name}
-                            onChange={() => select(value)}
-                          />
-                          {value.name}
-                        </td>
-                        <td className={styles.date}>{value.option} </td>
-                        <td></td>
-                        <td className={styles.date}>{value.estimate}</td>
-                      </tr>
-                    );
-                  })}
+                {buildProductItemsGroup(
+                  lowConcurrencyProductItems,
+                  styles.colour1,
+                )}
+                {buildProductItemsGroup(
+                  mediumConcurrencyProductItems,
+                  styles.colour2,
+                )}
+                {buildProductItemsGroup(
+                  highConcurrencyProductItems,
+                  styles.colour3,
+                )}
               </tbody>
             </table>
             <Product />
