@@ -138,6 +138,7 @@ export default function ListProduct() {
     <FirestoreCollection
       path={localStorage.getItem('token')}
       render={({ data }) => {
+        data.map((value) => products.push(value));
         const lowConcurrencyProductItems = sortAlphabeticallyByNameAttribute(
           data.filter((productItem) => productItem.option === '7'),
         );
@@ -167,6 +168,7 @@ export default function ListProduct() {
                   <th>Name</th>
                   <th>Option</th>
                   <th>Estimate</th>
+                  <th>LastDate</th>
                   <th>Eliminar</th>
                 </tr>
               </thead>
@@ -183,6 +185,81 @@ export default function ListProduct() {
                   highConcurrencyProductItems,
                   styles.colour3,
                 )}
+                {data.length === products.length
+                  ? list.map((value, key) => {
+                      const differenceDays =
+                        (currentDateSeconds -
+                          (!!value.lastPurchasedDate &&
+                          !!value.lastPurchasedDate.seconds
+                            ? value.lastPurchasedDate.seconds
+                            : 0)) /
+                        (3600 * 24);
+                      return (
+                        <tr key={key}>
+                          <td>
+                            <input
+                              type="checkbox"
+                              checked={differenceDays <= 1}
+                              id={value.name}
+                              onChange={() => select(value)}
+                            />
+                            {value.name}
+                          </td>
+                          <td>{value.option} </td>
+                          <td>{value.estimate} </td>
+                          <td>
+                            {moment(value.lastPurchasedDate.toDate()).format(
+                              'dddd, MMMM Do YYYY, h:mm:ss a',
+                            )}{' '}
+                          </td>
+                          <td>
+                            <input
+                              type="submit"
+                              value="Delete"
+                              name="Delete"
+                              onClick={() => showAlert(value)}
+                            />
+                          </td>
+                        </tr>
+                      );
+                    })
+                  : data.map((value, key) => {
+                      const differenceDays =
+                        (currentDateSeconds -
+                          (!!value.lastPurchasedDate &&
+                          !!value.lastPurchasedDate.seconds
+                            ? value.lastPurchasedDate.seconds
+                            : 0)) /
+                        (3600 * 24);
+                      return (
+                        <tr key={key}>
+                          <td>
+                            <input
+                              type="checkbox"
+                              checked={differenceDays <= 1}
+                              id={value.name}
+                              onChange={() => select(value)}
+                            />
+                            {value.name}
+                          </td>
+                          <td>{value.option} </td>
+                          <td>{value.estimate} </td>
+                          <td>
+                            {moment(value.lastPurchasedDate.toDate()).format(
+                              'dddd, MMMM Do YYYY, h:mm:ss a',
+                            )}{' '}
+                          </td>
+                          <td>
+                            <input
+                              type="submit"
+                              value="Delete"
+                              name="Delete"
+                              onClick={() => showAlert(value)}
+                            />
+                          </td>
+                        </tr>
+                      );
+                    })}
               </tbody>
             </table>
             <Product />
