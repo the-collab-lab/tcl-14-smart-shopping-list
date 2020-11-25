@@ -3,7 +3,9 @@ import { FirestoreCollection } from 'react-firestore';
 import Product from './Product';
 import calculateEstimate from '../../lib/estimates';
 import firebase from '@firebase/app';
+import swal from 'sweetalert';
 import moment from 'moment';
+
 
 export default function ListProduct() {
   const [marketListCreated, setMarketListCreated] = React.useState(false);
@@ -52,6 +54,38 @@ export default function ListProduct() {
     });
   };
 
+  const Delete = async (productid) => {
+    firebase
+      .firestore()
+      .collection(token)
+      .doc(productid)
+      .delete()
+      .then(() => {
+        console.log('eliminado');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const showAlert = (value) => {
+    swal({
+      title: 'Delete',
+      text: `Are you sure about delete ${value.name} from the list?`,
+      icon: 'warning',
+      buttons: ['Not', 'Yes'],
+    }).then((answer) => {
+      if (answer) {
+        Delete(value.id);
+        swal({
+          text: 'this article was deleted with exit',
+          icon: 'success',
+          timer: '2000',
+        });
+      }
+    });
+  };
+
   return (
     <FirestoreCollection
       path={localStorage.getItem('token')}
@@ -78,6 +112,7 @@ export default function ListProduct() {
                   <th>Option</th>
                   <th>Estimate</th>
                   <th>Date</th>
+                  <th>Eliminar</th>
                 </tr>
               </thead>
               <tbody>
@@ -111,6 +146,14 @@ export default function ListProduct() {
                               'dddd, MMMM Do YYYY, h:mm:ss a',
                             )}{' '}
                           </td>
+                          <td>
+                        <input
+                          type="submit"
+                          value="Delete"
+                          name="Delete"
+                          onClick={() => showAlert(value)}
+                        />
+                      </td>
                         </tr>
                       );
                     })
@@ -140,6 +183,14 @@ export default function ListProduct() {
                               'dddd, MMMM Do YYYY, h:mm:ss a',
                             )}{' '}
                           </td>
+                          <td>
+                        <input
+                          type="submit"
+                          value="Delete"
+                          name="Delete"
+                          onClick={() => showAlert(value)}
+                        />
+                      </td>
                         </tr>
                       );
                     })}
