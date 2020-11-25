@@ -113,8 +113,20 @@ export default function ListProduct() {
             {productItem.name}
           </td>
           <td className={styles.date}>{productItem.option} </td>
-          <td></td>
           <td className={styles.date}>{productItem.estimate}</td>
+          <td>
+            {moment(productItem.lastPurchasedDate.toDate()).format(
+              'dddd, MMMM Do YYYY, h:mm:ss a',
+            )}{' '}
+          </td>
+          <td>
+            <input
+              type="submit"
+              value="Delete"
+              name="Delete"
+              onClick={() => showAlert(productItem)}
+            />
+          </td>
         </tr>
       );
     });
