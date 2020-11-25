@@ -120,8 +120,15 @@ export default function ListProduct() {
             {productItem.name}
           </td>
           <td className={styles.date}>{productItem.option} </td>
-          <td></td>
           <td className={styles.date}>{productItem.estimate}</td>
+          <td>
+            <input
+              type="submit"
+              value="Delete"
+              name="Delete"
+              onClick={() => showAlert(productItem)}
+            />
+          </td>
         </tr>
       );
     });
@@ -160,7 +167,6 @@ export default function ListProduct() {
                   <th>Name</th>
                   <th>Option</th>
                   <th>Estimate</th>
-                  <th>Date</th>
                   <th>Eliminar</th>
                 </tr>
               </thead>
