@@ -5,7 +5,7 @@ import calculateEstimate from '../../lib/estimates';
 import firebase from '@firebase/app';
 import swal from 'sweetalert';
 import moment from 'moment';
-
+import styles from './listProduct.module.css';
 
 export default function ListProduct() {
   const [marketListCreated, setMarketListCreated] = React.useState(false);
@@ -18,12 +18,6 @@ export default function ListProduct() {
     setproductsList(products);
     setext(event.target.value);
   };
-
-  const list = !text
-    ? products
-    : productsList.filter(
-        (item) => item.name.toUpperCase().indexOf(text.toUpperCase()) > -1,
-      );
 
   const currentDateSeconds = new Date().getTime() / 1000;
   const token = localStorage.getItem('token');
@@ -86,12 +80,82 @@ export default function ListProduct() {
     });
   };
 
+  const sortAlphabeticallyByNameAttribute = (input) => {
+    return input.sort(function (a, b) {
+      if (a.name.toLowerCase() > b.name.toLowerCase()) {
+        return 1;
+      }
+      if (a.name.toLowerCase() < b.name.toLowerCase()) {
+        return -1;
+      }
+      return 0;
+    });
+  };
+
+  const buildProductItemsGroup = (productItemsArray, colorClassName) => {
+    return productItemsArray.map((productItem, key) => {
+      const differenceDays =
+        (currentDateSeconds -
+          (!!productItem.lastPurchasedDate &&
+          !!productItem.lastPurchasedDate.seconds
+            ? productItem.lastPurchasedDate.seconds
+            : 0)) /
+        (3600 * 24);
+      return (
+        <tr key={key} className={colorClassName}>
+          <td>
+            <input
+              type="checkbox"
+              checked={differenceDays <= 1}
+              id={productItem.name}
+              onChange={() => select(productItem)}
+            />
+            {productItem.name}
+          </td>
+          <td className={styles.date}>{productItem.option} </td>
+          <td className={styles.date}>{productItem.estimate}</td>
+          <td>
+            {moment(productItem.lastPurchasedDate.toDate()).format(
+              'dddd, MMMM Do YYYY, h:mm:ss a',
+            )}{' '}
+          </td>
+          <td>
+            <input
+              type="submit"
+              value="Delete"
+              name="Delete"
+              onClick={() => showAlert(productItem)}
+            />
+          </td>
+        </tr>
+      );
+    });
+  };
+
+  const searchFilter = (productsArray) => {
+    return productsArray.length === 0
+      ? []
+      : productsArray.filter(
+          (product) =>
+            product.name.toUpperCase().indexOf(text.toUpperCase()) > -1,
+        );
+  };
+
   return (
     <FirestoreCollection
       path={localStorage.getItem('token')}
-      render={({ data }) => {
-        data.map((value) => products.push(value));
-        return !marketListCreated && data.length === 0 ? (
+      render={({ data: allProducts = [] }) => {
+        const filteredData = searchFilter(allProducts);
+        const lowConcurrencyProductItems = sortAlphabeticallyByNameAttribute(
+          filteredData.filter((productItem) => productItem.option === '7'),
+        );
+        const mediumConcurrencyProductItems = sortAlphabeticallyByNameAttribute(
+          filteredData.filter((productItem) => productItem.option === '14'),
+        );
+        const highConcurrencyProductItems = sortAlphabeticallyByNameAttribute(
+          filteredData.filter((productItem) => productItem.option === '30'),
+        );
+        return !marketListCreated && allProducts.length === 0 ? (
           <div className="visualList">
             <div>You don't have a saved market list yet.</div>
             <button onClick={() => setMarketListCreated(true)}>
@@ -111,89 +175,23 @@ export default function ListProduct() {
                   <th>Name</th>
                   <th>Option</th>
                   <th>Estimate</th>
-                  <th>Date</th>
+                  <th>LastDate</th>
                   <th>Eliminar</th>
                 </tr>
               </thead>
               <tbody>
-                //it is validated if data and products are the same, //it makes
-                the table with the list filter, // if the table of products is
-                not traversed with the data.
-                {data.length === products.length
-                  ? list.map((value, key) => {
-                      const differenceDays =
-                        (currentDateSeconds -
-                          (!!value.lastPurchasedDate &&
-                          !!value.lastPurchasedDate.seconds
-                            ? value.lastPurchasedDate.seconds
-                            : 0)) /
-                        (3600 * 24);
-                      return (
-                        <tr key={key}>
-                          <td>
-                            <input
-                              type="checkbox"
-                              checked={differenceDays <= 1}
-                              id={value.name}
-                              onChange={() => select(value)}
-                            />
-                            {value.name}
-                          </td>
-                          <td>{value.option} </td>
-                          <td>{value.estimate} </td>
-                          <td>
-                            {moment(value.lastPurchasedDate.toDate()).format(
-                              'dddd, MMMM Do YYYY, h:mm:ss a',
-                            )}{' '}
-                          </td>
-                          <td>
-                        <input
-                          type="submit"
-                          value="Delete"
-                          name="Delete"
-                          onClick={() => showAlert(value)}
-                        />
-                      </td>
-                        </tr>
-                      );
-                    })
-                  : data.map((value, key) => {
-                      const differenceDays =
-                        (currentDateSeconds -
-                          (!!value.lastPurchasedDate &&
-                          !!value.lastPurchasedDate.seconds
-                            ? value.lastPurchasedDate.seconds
-                            : 0)) /
-                        (3600 * 24);
-                      return (
-                        <tr key={key}>
-                          <td>
-                            <input
-                              type="checkbox"
-                              checked={differenceDays <= 1}
-                              id={value.name}
-                              onChange={() => select(value)}
-                            />
-                            {value.name}
-                          </td>
-                          <td>{value.option} </td>
-                          <td>{value.estimate} </td>
-                          <td>
-                            {moment(value.lastPurchasedDate.toDate()).format(
-                              'dddd, MMMM Do YYYY, h:mm:ss a',
-                            )}{' '}
-                          </td>
-                          <td>
-                        <input
-                          type="submit"
-                          value="Delete"
-                          name="Delete"
-                          onClick={() => showAlert(value)}
-                        />
-                      </td>
-                        </tr>
-                      );
-                    })}
+                {buildProductItemsGroup(
+                  lowConcurrencyProductItems,
+                  styles.colour1,
+                )}
+                {buildProductItemsGroup(
+                  mediumConcurrencyProductItems,
+                  styles.colour2,
+                )}
+                {buildProductItemsGroup(
+                  highConcurrencyProductItems,
+                  styles.colour3,
+                )}
               </tbody>
             </table>
             <Product />
