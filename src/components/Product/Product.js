@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import firebase from '@firebase/app';
+import calculateEstimate from '../../lib/estimates';
 
 function Product() {
   const [option, setOption] = useState('');
   const [data, setData] = useState({
     name: '',
-    lastDate: null,
+    lastDate: '',
+    numberPurchases: 1,
   });
 
   const [error, setError] = useState('');
@@ -24,6 +26,7 @@ function Product() {
       .onSnapshot((snapshot) => {
         let products = [];
         snapshot.forEach((doc) => products.push(format(doc.data().name)));
+        console.log(products);
         setProductData(products);
       });
   }, []);
@@ -35,13 +38,29 @@ function Product() {
     return false;
   };
 
+  const getDiff = (date1, date2) => {
+    const diffTime = Math.abs(date2 - date1);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
+
+  const lastInterval = getDiff(new Date(), new Date());
+
+  //These methods validate the estimate, of the purchase as it is the first purchase there is always zero.
+  const estimate = calculateEstimate(
+    option,
+    lastInterval,
+    data.numberPurchases,
+  );
+
   const addProduct = (colecction, nameProduct) => {
     colecction
       .add({
         name: nameProduct,
         lastPurchasedDate: data.lastDate || new Date(),
         option: option,
-        numberPurchases: 1,
+        numberPurchases: data.numberPurchases,
+        estimate: estimate,
       })
       .then(() => {
         viewMessage('Successfully Added', 'success');
@@ -77,8 +96,9 @@ function Product() {
   };
 
   const format = (name) => {
-    return name.toLowerCase().replace(/[\W]+/g, '');
+    return name.toLowerCase().replace(/^\s+|\s+$/g, '');
   };
+
   return (
     <div>
       <p role="alert" className={error}>
@@ -123,12 +143,6 @@ function Product() {
             />
             <label> Not soon (in the next 30 days) </label>
           </div>
-        </div>
-        <div>
-          <label>
-            <h5>Last purchased date</h5>
-            <input type="text" />
-          </label>
         </div>
         <div>
           <input type="submit" value="Save" name="Save" onClick={validate} />
