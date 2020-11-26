@@ -6,11 +6,25 @@ import firebase from '@firebase/app';
 import swal from 'sweetalert';
 import moment from 'moment';
 import styles from './listProduct.module.css';
+import {
+  Table,
+  Container,
+  Button,
+  Modal,
+  Form,
+  FormControl,
+  Row,
+  Col,
+} from 'react-bootstrap';
 
 export default function ListProduct() {
   const [marketListCreated, setMarketListCreated] = React.useState(false);
   const [productsList, setproductsList] = useState([]);
   const [text, setext] = useState('');
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   let products = [];
 
@@ -120,12 +134,14 @@ export default function ListProduct() {
             )}{' '}
           </td>
           <td>
-            <input
+            <Button
+              variant="danger"
               type="submit"
               value="Delete"
-              name="Delete"
               onClick={() => showAlert(productItem)}
-            />
+            >
+              Delete
+            </Button>
           </td>
         </tr>
       );
@@ -164,37 +180,68 @@ export default function ListProduct() {
           </div>
         ) : (
           <>
-            <input
-              type="search"
-              value={text}
-              onChange={(text) => filter(text)}
-            />
-            <table>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Option</th>
-                  <th>Estimate</th>
-                  <th>LastDate</th>
-                  <th>Eliminar</th>
-                </tr>
-              </thead>
-              <tbody>
-                {buildProductItemsGroup(
-                  lowConcurrencyProductItems,
-                  styles.colour1,
-                )}
-                {buildProductItemsGroup(
-                  mediumConcurrencyProductItems,
-                  styles.colour2,
-                )}
-                {buildProductItemsGroup(
-                  highConcurrencyProductItems,
-                  styles.colour3,
-                )}
-              </tbody>
-            </table>
-            <Product />
+            <Container>
+              <Row>
+                <Col>
+                  <Button variant="primary" onClick={handleShow}>
+                    {' '}
+                    Add Product{' '}
+                  </Button>
+                  <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Add Product</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      {' '}
+                      <Product />
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleClose}>
+                        {' '}
+                        Close
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                </Col>
+                <Col md="auto">
+                  <Form inline>
+                    <FormControl
+                      type="text"
+                      placeholder="Search"
+                      className="mr-sm-2"
+                      value={text}
+                      onChange={(text) => filter(text)}
+                    />
+                  </Form>
+                </Col>
+              </Row>
+
+              <Table responsive="sm">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Option</th>
+                    <th>Estimate</th>
+                    <th>LastDate</th>
+                    <th>Eliminar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {buildProductItemsGroup(
+                    lowConcurrencyProductItems,
+                    styles.colour1,
+                  )}
+                  {buildProductItemsGroup(
+                    mediumConcurrencyProductItems,
+                    styles.colour2,
+                  )}
+                  {buildProductItemsGroup(
+                    highConcurrencyProductItems,
+                    styles.colour3,
+                  )}
+                </tbody>
+              </Table>
+            </Container>
           </>
         );
       }}
