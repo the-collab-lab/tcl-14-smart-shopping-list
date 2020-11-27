@@ -4,6 +4,7 @@ import './App.css';
 import ListProduct from './components/Product/ListProduct';
 import Home from './components/Home/home';
 import TokenList from './components/List/tokenList';
+import { yellow } from '@material-ui/core/colors';
 
 export default function App() {
   const [isActive, setIsActive] = useState('List');
@@ -16,7 +17,7 @@ export default function App() {
             className={`botton ${isActive === 'home' && 'bold-button'}`}
             onClick={() => setIsActive('home')}
           >
-            <Link to="/" className="no-decoration">
+            <Link to="/" className="no-decoration" style={{ color: 'white' }}>
               Home
             </Link>
           </button>

@@ -42,7 +42,8 @@ const Home = () => {
         <div className="submit-button-container"></div>
         <button
           onClick={consultToken}
-          className="submit-button-container btn btn-outline-primary"
+          className="submit-button-container btn"
+          style={{ backgroundColor: 'white' }}
         >
           Enter my list
         </button>
@@ -52,7 +53,11 @@ const Home = () => {
           </createToken>
         )}
         <div className="submit-button-container"></div>
-        <Link to="/tokenList" className="no-decoration">
+        <Link
+          to="/tokenList"
+          className="no-decoration"
+          style={{ color: 'black' }}
+        >
           Create new token.
         </Link>
       </div>

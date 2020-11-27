@@ -117,8 +117,9 @@ export default function ListProduct() {
         (3600 * 24);
       return (
         <tr key={key} className={colorClassName}>
-          <td>
+          <td className={styles.containerItem}>
             <input
+              className={styles.checkbox}
               type="checkbox"
               checked={differenceDays <= 1}
               id={productItem.name}
@@ -226,15 +227,15 @@ export default function ListProduct() {
                 <tbody>
                   {buildProductItemsGroup(
                     lowConcurrencyProductItems,
-                    styles.colour1,
+                    styles.color1,
                   )}
                   {buildProductItemsGroup(
                     mediumConcurrencyProductItems,
-                    styles.colour2,
+                    styles.color2,
                   )}
                   {buildProductItemsGroup(
                     highConcurrencyProductItems,
-                    styles.colour3,
+                    styles.color3,
                   )}
                 </tbody>
               </Table>

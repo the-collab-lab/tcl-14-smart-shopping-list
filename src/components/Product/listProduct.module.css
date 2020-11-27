@@ -1,21 +1,41 @@
+body {
+  background-color: #38afd0;
+}
+
 table,
 th,
 td {
   border: 1px solid black;
+  text-align: center;
+  color: rgb(88, 87, 87);
+}
+table > thead > tr > th {
+  background-color: #f17d28;
 }
 
 .date {
   text-align: center;
 }
 
-.colour1 {
+.checkbox {
+  height: 18px;
+  width: 18px;
+  position: absolute;
+  left: 5px;
+}
+
+.color1 {
   background-color: #f4fcb1;
 }
 
-.colour2 {
+.color2 {
   background-color: #cde9ff;
 }
 
-.colour3 {
+.color3 {
   background-color: #e8cdff;
+}
+
+.containerItem {
+  position: relative;
 }
