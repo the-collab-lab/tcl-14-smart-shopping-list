@@ -181,28 +181,7 @@ export default function ListProduct() {
         ) : (
           <>
             <Container>
-              <Row>
-                <Col>
-                  <Button variant="primary" onClick={handleShow}>
-                    {' '}
-                    Add Product{' '}
-                  </Button>
-                  <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Add Product</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      {' '}
-                      <Product />
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button variant="secondary" onClick={handleClose}>
-                        {' '}
-                        Close
-                      </Button>
-                    </Modal.Footer>
-                  </Modal>
-                </Col>
+              <Row className="mt-4 mb-4">
                 <Col md="auto">
                   <Form inline>
                     <FormControl
@@ -214,6 +193,24 @@ export default function ListProduct() {
                     />
                   </Form>
                 </Col>
+                <Col>
+                  <Button variant="primary" onClick={handleShow}>
+                    Add Product
+                  </Button>
+                  <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Add Product</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <Product />
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleClose}>
+                        Close
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                </Col>
               </Row>
 
               <Table responsive="sm">
@@ -223,7 +220,7 @@ export default function ListProduct() {
                     <th>Option</th>
                     <th>Estimate</th>
                     <th>LastDate</th>
-                    <th>Eliminar</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
