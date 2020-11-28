@@ -1,25 +1,37 @@
 .input-container {
   width: 100%;
+  padding-bottom: -4rem;
+  padding-top: 2rem;
 }
 
 .regular-style {
   width: auto;
   height: 35px;
-  border: none;
-  padding: 0 10px 0 20px;
+  border: 2rem;
+  padding: 0 10px 0 10px;
+  border-radius: 35px;
 }
 
 .regular-style::placeholder {
   font-size: 14px;
 }
 
+.form-control {
+  border-radius: 5px;
+  font-family: 'Bree Serif', serif;
+  width: 15rem;
+  text-align: center;
+}
+
 .input-error {
   border: 1px solid red;
+  width: 16rem;
   color: red;
   background-color: rgb(214, 177, 177);
-  width: 100%;
   padding: 7px 7px 7px 15px;
   border-radius: 5px;
+  text-align: center;
+  font-family: 'Bree Serif', serif;
 }
 
 .input-error::placeholder {

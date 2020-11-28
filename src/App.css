@@ -1,7 +1,6 @@
 .Buttons {
   display: flex;
   justify-content: space-around;
-  background-color: #282c34;
 }
 
 .botton {

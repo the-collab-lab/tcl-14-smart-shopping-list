@@ -173,9 +173,14 @@ export default function ListProduct() {
           filteredData.filter((productItem) => productItem.option === '30'),
         );
         return !marketListCreated && allProducts.length === 0 ? (
-          <div className="visualList">
-            <div>You don't have a saved market list yet.</div>
-            <button onClick={() => setMarketListCreated(true)}>
+          <div className={styles.visualList}>
+            <div className={styles.pagraph}>
+              You don't have a saved market list yet.
+            </div>
+            <button
+              className={styles.botton3}
+              onClick={() => setMarketListCreated(true)}
+            >
               Create market list
             </button>
           </div>
@@ -184,20 +189,18 @@ export default function ListProduct() {
             <Container>
               <Row className="mt-4 mb-4">
                 <Col md="auto">
-                  <Form inline>
-                    <FormControl
-                      type="text"
-                      placeholder="Search"
-                      className="mr-sm-2"
-                      value={text}
-                      onChange={(text) => filter(text)}
-                    />
-                  </Form>
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    className="form-control"
+                    value={text}
+                    onChange={(text) => filter(text)}
+                  />
                 </Col>
                 <Col>
-                  <Button variant="primary" onClick={handleShow}>
+                  <button className={styles.botton3} onClick={handleShow}>
                     Add Product
-                  </Button>
+                  </button>
                   <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
                       <Modal.Title>Add Product</Modal.Title>

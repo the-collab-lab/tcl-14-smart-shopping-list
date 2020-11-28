@@ -4,7 +4,6 @@ import './App.css';
 import ListProduct from './components/Product/ListProduct';
 import Home from './components/Home/home';
 import TokenList from './components/List/tokenList';
-import { yellow } from '@material-ui/core/colors';
 
 export default function App() {
   const [isActive, setIsActive] = useState('List');
