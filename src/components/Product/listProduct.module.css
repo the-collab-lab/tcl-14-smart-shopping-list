@@ -5,7 +5,7 @@ table,
 th,
 td {
   border: 1px solid black;
-  text-align: center;
+  text-align: flex-end;
   color: rgb(88, 87, 87);
 }
 table > thead > tr > th {
@@ -19,8 +19,6 @@ table > thead > tr > th {
 .checkbox {
   height: 18px;
   width: 18px;
-  position: absolute;
-  left: 5px;
 }
 
 .color1 {

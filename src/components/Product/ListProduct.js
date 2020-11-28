@@ -217,31 +217,30 @@ export default function ListProduct() {
                 </Col>
               </Row>
 
-              <Table responsive="sm">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Option</th>
-                    <th>Estimate</th>
-                    <th>LastDate</th>
-                    <th>Delete</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {buildProductItemsGroup(
-                    lowConcurrencyProductItems,
-                    styles.color1,
-                  )}
-                  {buildProductItemsGroup(
-                    mediumConcurrencyProductItems,
-                    styles.color2,
-                  )}
-                  {buildProductItemsGroup(
-                    highConcurrencyProductItems,
-                    styles.color3,
-                  )}
-                </tbody>
-              </Table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Option</th>
+                  <th>Estimate</th>
+                  <th>LastDate</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {buildProductItemsGroup(
+                  lowConcurrencyProductItems,
+                  styles.color1,
+                )}
+                {buildProductItemsGroup(
+                  mediumConcurrencyProductItems,
+                  styles.color2,
+                )}
+                {buildProductItemsGroup(
+                  highConcurrencyProductItems,
+                  styles.color3,
+                )}
+              </tbody>
             </Container>
           </>
         );
