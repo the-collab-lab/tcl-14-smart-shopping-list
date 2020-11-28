@@ -4,6 +4,7 @@ import './App.css';
 import ListProduct from './components/Product/ListProduct';
 import Home from './components/Home/home';
 import TokenList from './components/List/tokenList';
+import 'boxicons';
 
 export default function App() {
   const [isActive, setIsActive] = useState('List');
@@ -13,11 +14,11 @@ export default function App() {
       <div className="body">
         <div className="Buttons">
           <button
-            className={`botton ${isActive === 'home' && 'bold-button'}`}
+            className={`icon ${isActive === 'home' && 'bold-button'}`}
             onClick={() => setIsActive('home')}
           >
             <Link to="/" className="no-decoration" style={{ color: 'white' }}>
-              Home
+              <box-icon name="home-heart" animation="tada" size="lg"></box-icon>
             </Link>
           </button>
         </div>

@@ -29,7 +29,7 @@
 }
 
 .body {
-  bottom: 0;
+  bottom: 10px;
   position: fixed;
   width: 100%;
 }
@@ -41,4 +41,11 @@ h2 {
 .tokenButton {
   display: flex;
   justify-content: center;
+}
+
+.icon {
+  text-decoration: none;
+  background-color: #16a9e0;
+  color: white;
+  border-radius: 18px;
 }
