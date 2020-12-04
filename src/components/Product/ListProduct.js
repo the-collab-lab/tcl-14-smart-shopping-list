@@ -6,11 +6,25 @@ import firebase from '@firebase/app';
 import swal from 'sweetalert';
 import moment from 'moment';
 import styles from './listProduct.module.css';
+import {
+  Table,
+  Container,
+  Button,
+  Modal,
+  Form,
+  FormControl,
+  Row,
+  Col,
+} from 'react-bootstrap';
 
 export default function ListProduct() {
   const [marketListCreated, setMarketListCreated] = React.useState(false);
   const [productsList, setproductsList] = useState([]);
   const [text, setext] = useState('');
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   let products = [];
 
@@ -103,8 +117,9 @@ export default function ListProduct() {
         (3600 * 24);
       return (
         <tr key={key} className={colorClassName}>
-          <td>
+          <td className={styles.containerItem}>
             <input
+              className={styles.checkbox}
               type="checkbox"
               checked={differenceDays <= 1}
               id={productItem.name}
@@ -120,12 +135,14 @@ export default function ListProduct() {
             )}{' '}
           </td>
           <td>
-            <input
+            <Button
+              variant="danger"
               type="submit"
               value="Delete"
-              name="Delete"
               onClick={() => showAlert(productItem)}
-            />
+            >
+              Delete
+            </Button>
           </td>
         </tr>
       );
@@ -156,45 +173,75 @@ export default function ListProduct() {
           filteredData.filter((productItem) => productItem.option === '30'),
         );
         return !marketListCreated && allProducts.length === 0 ? (
-          <div className="visualList">
-            <div>You don't have a saved market list yet.</div>
-            <button onClick={() => setMarketListCreated(true)}>
+          <div className={styles.visualList}>
+            <div className={styles.pagraph}>
+              You don't have a saved market list yet.
+            </div>
+            <button
+              className={styles.botton3}
+              onClick={() => setMarketListCreated(true)}
+            >
               Create market list
             </button>
           </div>
         ) : (
           <>
-            <input
-              type="search"
-              value={text}
-              onChange={(text) => filter(text)}
-            />
-            <table>
+            <Container>
+              <Row className="mt-4 mb-4">
+                <Col md="auto">
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    className="form-control"
+                    value={text}
+                    onChange={(text) => filter(text)}
+                  />
+                </Col>
+                <Col>
+                  <button className={styles.botton3} onClick={handleShow}>
+                    Add Product
+                  </button>
+                  <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Add Product</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <Product />
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleClose}>
+                        Close
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                </Col>
+              </Row>
+
               <thead>
                 <tr>
                   <th>Name</th>
                   <th>Option</th>
                   <th>Estimate</th>
                   <th>LastDate</th>
-                  <th>Eliminar</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
+
               <tbody>
                 {buildProductItemsGroup(
                   lowConcurrencyProductItems,
-                  styles.colour1,
+                  styles.color1,
                 )}
                 {buildProductItemsGroup(
                   mediumConcurrencyProductItems,
-                  styles.colour2,
+                  styles.color2,
                 )}
                 {buildProductItemsGroup(
                   highConcurrencyProductItems,
-                  styles.colour3,
+                  styles.color3,
                 )}
               </tbody>
-            </table>
-            <Product />
+            </Container>
           </>
         );
       }}

@@ -2,7 +2,6 @@ import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './home.css';
 import Input from './Loginlist/input/input';
-import Label from './Loginlist/label/label';
 
 const Home = () => {
   const [entry, setPassword] = useState('');
@@ -25,7 +24,18 @@ const Home = () => {
   return (
     <Fragment>
       <div className="login-container form-group">
-        <Label text="Token" />
+        <div className="title">SmartShopping</div>
+        <h5 className="login-phrase">Don't you have a List?</h5>
+        <div className="submit-button-container">
+          <Link
+            to="/tokenList"
+            className="no-decoration botton"
+            style={{ color: '#fefefe' }}
+          >
+            Create new List.
+          </Link>
+        </div>
+        <h5 className="login-phrase">Do you have a token List?</h5>
         <Input
           attribute={{
             id: 'token',
@@ -39,22 +49,20 @@ const Home = () => {
         {passwordError && (
           <label className="label-error">Invalid or incomplete token</label>
         )}
-        <div className="submit-button-container"></div>
-        <button
-          onClick={consultToken}
-          className="submit-button-container btn btn-outline-primary"
-        >
-          Enter my list
-        </button>
-        {false && (
-          <createToken className="label-error">
-            Invalid or incomplete token
-          </createToken>
-        )}
-        <div className="submit-button-container"></div>
-        <Link to="/tokenList" className="no-decoration">
-          Create new token.
-        </Link>
+        <div>
+          <button
+            onClick={consultToken}
+            className="submit-button-container  botton_enter"
+            style={{ color: '#fefefe' }}
+          >
+            Enter my list
+          </button>
+          {false && (
+            <createToken className="label-error">
+              Invalid or incomplete token
+            </createToken>
+          )}
+        </div>
       </div>
     </Fragment>
   );

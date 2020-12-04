@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import firebase from '@firebase/app';
 import calculateEstimate from '../../lib/estimates';
+import {
+  Table,
+  Container,
+  Button,
+  Modal,
+  Form,
+  FormControl,
+  Row,
+  Col,
+} from 'react-bootstrap';
 
 function Product() {
   const [option, setOption] = useState('');
@@ -104,50 +114,54 @@ function Product() {
       <p role="alert" className={error}>
         {errorMessage}
       </p>
-      <form>
-        <div>
-          <label>
-            Name:
-            <input type="text" onChange={handleInputChange} name="name" />
-          </label>
-        </div>
-        <div>
-          <h5>How soon will you buy</h5>
-          <div>
-            <input
-              type="radio"
-              name="date"
-              id="soon"
-              value="Soon (in the next 7 days)"
-              onClick={() => setOption('7')}
-            />
-            <label> Soon (in the next 7 days)</label>
-          </div>
-          <div>
-            <input
-              type="radio"
-              name="date"
-              id="kind"
-              value=" Kind of soon (in the next 14 days)"
-              onClick={() => setOption('14')}
-            />
-            <label> Kind of soon (in the next 14 days) </label>
-          </div>
-          <div>
-            <input
-              type="radio"
-              name="date"
-              id="notSoon"
-              value="Not soon (in the next 30 days)"
-              onClick={() => setOption('30')}
-            />
-            <label> Not soon (in the next 30 days) </label>
-          </div>
-        </div>
-        <div>
-          <input type="submit" value="Save" name="Save" onClick={validate} />
-        </div>
-      </form>
+      <Form>
+        <Form.Group>
+          <Form.Label>Name </Form.Label>
+          <Form.Control
+            type="text"
+            onChange={handleInputChange}
+            name="name"
+            placeholder="Name Product"
+          />
+        </Form.Group>
+        <Form.Group controlId="formBasicCheckbox">
+          <Form.Label>How soon will you buy </Form.Label>
+          <Form.Check
+            type="radio"
+            name="date"
+            id="soon"
+            value="Soon (in the next 7 days)"
+            onClick={() => setOption('7')}
+            label="Soon (in the next 7 days)"
+          />
+          <Form.Check
+            type="radio"
+            name="date"
+            id="kind"
+            value=" Kind of soon (in the next 14 days)"
+            onClick={() => setOption('14')}
+            label="Kind of soon (in the next 14 days)"
+          />
+          <Form.Check
+            type="radio"
+            name="date"
+            id="notSoon"
+            value="Not soon (in the next 30 days)"
+            onClick={() => setOption('30')}
+            label="Not soon (in the next 30 days)"
+          />
+        </Form.Group>
+        <Button
+          variant="success"
+          type="submit"
+          value="Save"
+          name="Save"
+          onClick={validate}
+        >
+          {' '}
+          Save{' '}
+        </Button>
+      </Form>
     </div>
   );
 }

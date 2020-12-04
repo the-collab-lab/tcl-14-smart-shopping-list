@@ -1,7 +1,6 @@
 .Buttons {
   display: flex;
   justify-content: space-around;
-  background-color: #282c34;
 }
 
 .botton {
@@ -12,7 +11,7 @@
   padding-bottom: 15px;
   padding-left: 40px;
   padding-right: 40px;
-  background-color: #09d3ac;
+  background-color: #007bff;
   border-color: #d8d8d8;
   border-width: 3px;
   border-style: solid;
@@ -30,7 +29,7 @@
 }
 
 .body {
-  bottom: 0;
+  bottom: 10px;
   position: fixed;
   width: 100%;
 }
@@ -42,4 +41,11 @@ h2 {
 .tokenButton {
   display: flex;
   justify-content: center;
+}
+
+.icon {
+  text-decoration: none;
+  background-color: #16a9e0;
+  color: white;
+  border-radius: 18px;
 }
