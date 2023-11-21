@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import firebase from '@firebase/app';
 import calculateEstimate from '../../lib/estimates';
-import {
-  Table,
-  Container,
-  Button,
-  Modal,
-  Form,
-  FormControl,
-  Row,
-  Col,
-} from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 
 function Product() {
   const [option, setOption] = useState('');

@@ -6,19 +6,11 @@ import firebase from '@firebase/app';
 import swal from 'sweetalert';
 import moment from 'moment';
 import styles from './listProduct.module.css';
-import {
-  Table,
-  Container,
-  Button,
-  Modal,
-  Form,
-  FormControl,
-  Row,
-  Col,
-} from 'react-bootstrap';
+import { Container, Button, Modal, Row, Col } from 'react-bootstrap';
 
 export default function ListProduct() {
   const [marketListCreated, setMarketListCreated] = React.useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [productsList, setproductsList] = useState([]);
   const [text, setext] = useState('');
   const [show, setShow] = useState(false);
