@@ -28,7 +28,7 @@ const Home = () => {
         <h5 className="login-phrase">Don't you have a List?</h5>
         <div className="submit-button-container">
           <Link
-            to="/tokenList"
+            to="/"
             className="no-decoration botton"
             style={{ color: '#fefefe' }}
           >
