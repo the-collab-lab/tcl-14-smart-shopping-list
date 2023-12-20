@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './home.css';
 import Input from './Loginlist/input/input';
@@ -21,6 +21,14 @@ const Home = () => {
       window.location.href = '/list-products';
     }
   };
+
+  /** Using this alert instead of the ArchivalNoticeModal due to legacy deps */
+  useEffect(() => {
+    alert(
+      'This Smart Shopping List App was made by early-career developers at The Collab Lab. This project has now been archived. To view the demo shopping list, enter the three word token: the collab lab. The following features are no longer supported: creating new lists, adding & deleting items from the list, and marking items on the list as purchased.',
+    );
+  }, []);
+
   return (
     <Fragment>
       <div className="login-container form-group">
