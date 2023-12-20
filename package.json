@@ -10,7 +10,7 @@
     "boxicons": "^2.0.7",
     "date-fns": "^2.16.1",
     "diff": "^4.0.2",
-    "firebase": "^7.22.1",
+    "firebase": "^10.7.1",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "lodash": "^4.17.20",
